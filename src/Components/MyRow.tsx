@@ -32,7 +32,7 @@ const MyRow: React.FC<MyRowProps> = (props) => {
 
   return (
     <Row
-      onDragStart={(e) => dragStartHandler(item)}
+      onDragStart={() => dragStartHandler(item)}
       onDragLeave={(e) => dragEndHandler(e)}
       onDragEnd={(e) => dragEndHandler(e)}
       onDragOver={(e) => dragOverHandler(e)}

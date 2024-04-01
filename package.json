@@ -1,0 +1,22 @@
+{
+  "name": "react-email-demo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "start": "tsc && node dist/src/index.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0"
+  },
+  "dependencies": {
+    "@react-email/components": "^0.0.16",
+    "quill": "^2.0.0-rc.4",
+    "react-email": "^2.1.1",
+    "react-quill": "^2.0.0"
+  }
+}

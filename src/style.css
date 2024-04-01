@@ -1,0 +1,127 @@
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0 auto;
+}
+
+.wrapper {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  position: relative;
+  padding: 20px;
+}
+
+
+.content {
+  padding: 10px;
+}
+
+.container {
+  transition: all 0.2s linear;
+}
+
+.column {
+  position: relative;
+  padding: 10px;
+  transition: all .25s ;
+}
+
+.column.empty::after {
+  content: " 👈 - - - - Это разделитель - - - - 👉 ";
+  display: block;
+  width: 100%;
+  height: 10px;
+  opacity: .4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.column:hover {
+  opacity: .8;
+  background-color: aliceblue;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);
+
+}
+
+.inner {
+  width: calc(100% - 400px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.inner-border {
+  margin-top: 10px;
+  border: 2px solid grey;
+  padding: 20px;
+  border-radius: 10px;
+  transition: width 0.2s linear;
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);
+}
+
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);
+
+}
+button:hover {
+  background-color: aliceblue;
+}
+button:active {
+  transform: translate3d(2px, 2px, 0) ;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+
+
+
+.drag-over {
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);
+  border-bottom: 2px solid lightblue;
+}
+
+

@@ -31,7 +31,11 @@ export default function App() {
   React.useEffect(() => {
     const data = localStorage.getItem("ReactValue");
 
-    setReactQuillValue(data === null ? initialState  : JSON.parse(data));
+    if(data === null || data === '') {
+      setReactQuillValue(initialState);
+      return
+    } 
+    setReactQuillValue(JSON.parse(data));
   }, []);
 
   const choseTemplateSize = (format: string) => {
@@ -139,7 +143,6 @@ export default function App() {
   };
 
   const removeFragmentHandler = (item: ReactQuillInterface) => {
-    debugger
     setReactQuillValue((prev) => {
       return prev.filter((i) => i.id !== item.id);
     });

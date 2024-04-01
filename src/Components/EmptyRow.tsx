@@ -13,7 +13,7 @@ const EmptyRow = (props) => {
 
   return (
     <Row
-      onDragStart={(e) => dragStartHandler(e, item)}
+      onDragStart={() => dragStartHandler(item)}
       onDragLeave={(e) => dragEndHandler(e)}
       onDragEnd={(e) => dragEndHandler(e)}
       onDragOver={(e) => dragOverHandler(e)}
@@ -23,7 +23,7 @@ const EmptyRow = (props) => {
     >
       <Column
         style={{ padding: "10px 0" }}
-        className={`column ${item.value === "" ? "empty" : ""}`}
+        className={`column ${item.value === "" ? "empty" : ""} ${item.isActive ? 'active' : ''}`}
         onClick={() => addItemHandler(item.id)}
       ></Column>
     </Row>

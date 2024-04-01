@@ -30,8 +30,8 @@ body {
 
 .column {
   position: relative;
-  padding: 10px;
-  transition: all .25s ;
+  padding: 20px 10px;
+  transition: all .25s;
 }
 
 .column.empty::after {
@@ -52,6 +52,14 @@ body {
   border-radius: 10px;
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);
 
+}
+
+.active {
+  opacity: .5;
+  background-color: rgb(245, 248, 250);
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);
 }
 
 .inner {
@@ -116,12 +124,7 @@ button:active {
   }
 }
 
-
-
-
 .drag-over {
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);
   border-bottom: 2px solid lightblue;
 }
-
-

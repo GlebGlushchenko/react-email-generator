@@ -12,10 +12,11 @@ export interface ReactQuillInterface {
   value: string;
   ItsShow: boolean;
   order: number;
+  isActive: boolean
 }
 
 export default function App() {
-  const initialState = [{ id: 1, value: "Это параграф!", ItsShow: true, order: 1 }];
+  const initialState = [{ id: 1, value: "Это параграф!", ItsShow: true, order: 1, isActive: false }];
   const [templateSize, setTemplateSize] = React.useState<number>(900);
   const [reactQuillValue, setReactQuillValue] = React.useState<ReactQuillInterface[]>(initialState);
   const [iframeShow, setIframeShow] = React.useState(false);
@@ -71,6 +72,7 @@ export default function App() {
           value: "",
           ItsShow: true,
           order: Date.now(),
+          isActive: false
         },
       ];
     });
@@ -105,7 +107,17 @@ export default function App() {
   const addItemHandler = (id: number) => {
     const findElement = reactQuillValue.find((i) => i.id === id);
     toggleNavbar();
+    
     setSideBarRedactorValue(findElement);
+
+    setReactQuillValue((prev) => {
+      return prev.map((item) => {
+        if (item.id === findElement.id) {
+          return { ...item, isActive: true };
+        }
+        return { ...item, isActive: false};
+      });
+    })
   };
 
   const onChangeHandler = (val: string) => {

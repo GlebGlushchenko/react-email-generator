@@ -29,7 +29,7 @@ const MyRow: React.FC<MyRowProps> = (props) => {
   } = props;
   const removePTags = (htmlString: string) =>
     htmlString.replace(/<p[^>]*>(.*?)<\/p>/g, "$1");
-
+  console.log(item, 'props')
   return (
     <Row
       onDragStart={() => dragStartHandler(item)}
@@ -40,12 +40,12 @@ const MyRow: React.FC<MyRowProps> = (props) => {
       draggable={dragOn}
       key={item.id}
     >
-      <Column className="column" onClick={() => addItemHandler(item.id)}>
+      <Column className={`column ${item.isActive ? 'active' : ''}`} onClick={() => addItemHandler(item.id)}>
         <Paragraph>
           <span
             style={{ textAlign: "left" }}
             dangerouslySetInnerHTML={{
-              __html: removePTags(item.value),
+              __html: removePTags(item.value)
             }}
           ></span>
         </Paragraph>

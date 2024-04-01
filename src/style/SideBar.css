@@ -72,8 +72,8 @@
   margin-top: 20px;
 }
 
-.input-control input {
-  padding: 15px 10px;
+.input-control-item {
+  padding: 15px 5px;
   background-color: aliceblue;
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);
   margin-right: 10px;
@@ -82,6 +82,6 @@
   outline: none;
 }
 
-.input-control input :last-child {
+.input-control-item:last-child {
   margin-right: 0;
 }

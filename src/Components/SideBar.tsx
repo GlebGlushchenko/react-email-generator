@@ -91,8 +91,8 @@ const SideBar: React.FC<SideBarProps> = (props) => {
           Удалить
         </button>
         <div className="input-control">
-        <input value={inputTextValue} onChange={(e) => setInputTextValue(e.target.value)} type="text" placeholder="Текст для кнопки..." />
-        <input value={inputUrlValue} onChange={(e) => setInputUrlValue(e.target.value)} type="text" placeholder="URL..." />
+        <input className="input-control-item" value={inputTextValue} onChange={(e) => setInputTextValue(e.target.value)} type="text" placeholder="Текст для кнопки..." />
+        <input className="input-control-item" value={inputUrlValue} onChange={(e) => setInputUrlValue(e.target.value)} type="text" placeholder="URL..." />
         </div>
         
       </div>

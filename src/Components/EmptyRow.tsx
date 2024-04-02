@@ -6,7 +6,7 @@ const EmptyRow = (props) => {
     dragEndHandler,
     dragOverHandler,
     dropHandler,
-    addItemHandler,
+    chooseItemHandler,
     dragOn,
     item,
   } = props;
@@ -24,7 +24,7 @@ const EmptyRow = (props) => {
       <Column
         style={{ padding: "10px 0" }}
         className={`column ${item.value === "" ? "empty" : ""} ${item.isActive ? 'active' : ''}`}
-        onClick={() => addItemHandler(item.id)}
+        onClick={() => chooseItemHandler(item.id)}
       ></Column>
     </Row>
   );

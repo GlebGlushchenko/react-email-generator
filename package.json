@@ -17,6 +17,7 @@
     "@react-email/components": "^0.0.16",
     "quill": "^2.0.0-rc.4",
     "react-email": "^2.1.1",
-    "react-quill": "^2.0.0"
+    "react-quill": "^2.0.0",
+    "zustand": "^4.5.2"
   }
 }

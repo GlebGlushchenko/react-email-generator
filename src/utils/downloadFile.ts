@@ -7,3 +7,4 @@ export const downloadFile = (content: string, filename: string): void => {
   element.click();
   document.body.removeChild(element);
 };
+

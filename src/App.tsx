@@ -3,28 +3,22 @@ import MyTemplate from "../template/my.template";
 import { render } from "@react-email/components";
 import { downloadFile } from "./utils/downloadFile";
 
+import { useItemsStore } from "./state/item.state";
 import "react-quill/dist/quill.snow.css";
 import Modal from "./Components/Modal";
 import SideBar from "./Components/SideBar";
+import { useSideBarStore } from "./state/sideBar.state";
+import { useModalStore } from "./state/modal.state";
+import { useDragStore } from "./state/drag.state";
 export interface ReactQuillInterface {
-  id: number;
-  value: string;
-  ItsShow: boolean;
-  order: number;
-  isActive: boolean;
+  id?: number;
+  value?: string;
+  ItsShow?: boolean;
+  order?: number;
+  isActive?: boolean;
 }
 
 export default function App() {
-  const initialState = [
-    { id: 1, value: "Это параграф!", ItsShow: true, order: 1, isActive: false },
-  ];
-  const [templateSize, setTemplateSize] = React.useState<number>(900);
-  const [reactQuillValue, setReactQuillValue] =
-    React.useState<ReactQuillInterface[]>(initialState);
-  const [iframeShow, setIframeShow] = React.useState(false);
-  const [html, setHtml] = React.useState("");
-  const [siteBarRedactorValue, setSideBarRedactorValue] = React.useState(null);
-
   const [inputUrlValue, setInputUrlValue] = React.useState<string>(
     "https://www.google.com/"
   );
@@ -33,24 +27,61 @@ export default function App() {
 
   const [addLinkButton, setAddLinkButton] = React.useState(false);
 
-  React.useEffect(() => {
-    const data = localStorage.getItem("ReactValue");
 
-    if (data === null || data === "") {
-      setReactQuillValue(initialState);
+// ZUSLAND
+  const size = useItemsStore(state => state.templateSize)
+
+  const setHtml = useItemsStore(state => state.setHtml)
+  const html = useItemsStore(state => state.html)
+
+  const reactQuillValue = useItemsStore(state => state.items)
+  const addText = useItemsStore(state => state.addText)
+
+  const allClear = useItemsStore(state => state.allClear)
+  const setSideBarItemValue = useItemsStore(state => state.setSideBarItemValue)
+  const chooseItem = useItemsStore(state => state.chooseItem)
+
+  const changeFragment = useItemsStore(state => state.changeFragment)
+  const removeFragmentHandler = useItemsStore(state => state.removeFragmentHandler)
+  const dropHandler = useItemsStore(state => state.changeOrder)
+
+  const setSideBarRedactorItem = useItemsStore(state => state.setSideBarRedactorItem)
+  const sideBarItem = useItemsStore(state => state.sideBarItem)
+  const setItems = useItemsStore(state => state.setItems)
+
+  const setOpenSideBar = useSideBarStore(state => state.setOpenSideBar)
+
+  const iframeShow = useModalStore(state => state.iframeShow)
+  const setIframeShow = useModalStore(state => state.setIframeShow)
+  
+  const setCurrentItem = useItemsStore(state => state.setCurrentItem)
+
+  const dragOn = useDragStore(state => state.dragOn)
+  const setDragOn = useDragStore(state => state.setDragOn)
+  ////////
+
+
+
+
+  React.useEffect(() => {
+    const data: [] | null | string = localStorage.getItem("ReactState");
+    const x = JSON.parse(data)
+    if (x === null || x === "" || x.length === 0 || x === '[]')  {
+      setItems(reactQuillValue);
       return;
     }
-    setReactQuillValue(JSON.parse(data));
+    setItems(x);
   }, []);
 
-  const choseTemplateSize = (format: string) => {
-    format === "mobile" ? setTemplateSize(400) : setTemplateSize(900);
-  };
+  React.useEffect(() => {
+    localStorage.setItem("ReactState",JSON.stringify(reactQuillValue))
+  
+  }, [reactQuillValue])
 
   const renderPreview = () => {
     const emailHTML = render(
       <MyTemplate
-        size={templateSize}
+        size={size}
         content={reactQuillValue}
         inputTextValue={inputTextValue}
         inputUrlValue={inputUrlValue}
@@ -64,7 +95,7 @@ export default function App() {
   const renderHtml = () => {
     const emailHTML = render(
       <MyTemplate
-        size={templateSize}
+        size={size}
         content={reactQuillValue}
         inputTextValue={inputTextValue}
         inputUrlValue={inputUrlValue}
@@ -72,78 +103,16 @@ export default function App() {
       />
     );
 
-    downloadHtml(emailHTML);
+    downloadFile(emailHTML, "email.html");
   };
 
-  const downloadHtml = (html) => {
-    downloadFile(html, "email.html");
-  };
-  const addText = () => {
-    setReactQuillValue((prev) => {
-      return [
-        ...prev,
-        {
-          id: Date.now(),
-          value: "",
-          ItsShow: false,
-          order: Date.now(),
-          isActive: false,
-        },
-      ];
-    });
-    localStorage.setItem("ReactValue", JSON.stringify(reactQuillValue));
-  };
-
-  const clearHandler = () => {
-    setReactQuillValue(initialState);
-    localStorage.setItem("ReactValue", "");
-  };
-
-  const addItemHandler = (id: number) => {
+  const chooseItemHandler = (id: number) => {
     const findElement = reactQuillValue.find((i) => i.id === id);
-    toggleNavbar();
+    setOpenSideBar(true);
 
-    setSideBarRedactorValue(findElement);
-
-    setReactQuillValue((prev) => {
-      return prev.map((item) => {
-        if (item.id === findElement.id) {
-          return { ...item, isActive: true };
-        }
-        return { ...item, isActive: false };
-      });
-    });
-  };
-
-  const onChangeHandler = (val: string) => {
-    setSideBarRedactorValue((prev) => {
-      return { ...prev, value: val };
-    });
-  };
-
-  const changeFragment = (obj) => {
-    setReactQuillValue((prevState) => {
-      return prevState.map((item) => {
-        if (item.id === obj.id) {
-          return { ...item, value: siteBarRedactorValue.value };
-        }
-        return item;
-      });
-    });
-  };
-
-  const removeFragmentHandler = (item: ReactQuillInterface) => {
-    setReactQuillValue((prev) => {
-      return prev.filter((i) => i.id !== item.id);
-    });
-
-    setSideBarRedactorValue("");
-  };
-
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  const toggleNavbar = () => {
-    setIsOpen(true);
+    setSideBarRedactorItem(findElement);
+    chooseItem(id)
+   
   };
 
   const showIframe = () => {
@@ -151,60 +120,32 @@ export default function App() {
     setIframeShow(!iframeShow);
   };
 
-  React.useEffect(() => {
-    if (iframeShow) {
-      document.body.classList.add("modal-open");
-    } else {
-      document.body.classList.remove("modal-open");
-    }
-  }, [iframeShow]);
 
-  const [currentItem, setCurrentItem] = React.useState(null);
-  const [dragOn, setDragOn] = React.useState(true);
 
   const dragStartHandler = (item: ReactQuillInterface) => {
     setCurrentItem(item);
   };
+
   const dragEndHandler = (e) => {
     e.target.classList.remove("drag-over");
   };
+
   const dragOverHandler = (e) => {
     e.preventDefault();
     e.target.classList.add("drag-over");
   };
-  const dropHandler = (e, item) => {
-    e.preventDefault();
-
-    setReactQuillValue(
-      reactQuillValue.map((i) => {
-        if (i.id === item.id) {
-          return { ...i, order: currentItem.order };
-        }
-
-        if (i.id === currentItem.id) {
-          return { ...i, order: item.order };
-        }
-        return i;
-      })
-    );
-
-    e.target.classList.remove("drag-over");
-  };
 
   return (
     <div className="wrapper">
-      {iframeShow && <Modal setIframeShow={setIframeShow} html={html} />}
+      {iframeShow && <Modal html={html} />}
       <SideBar
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        choseTemplateSize={choseTemplateSize}
         showIframe={showIframe}
         renderHtml={renderHtml}
-        clearHandler={clearHandler}
+        clearHandler={allClear}
         setDragOn={setDragOn}
         dragOn={dragOn}
-        onChangeHandler={onChangeHandler}
-        siteBarRedactorValue={siteBarRedactorValue}
+        setSideBarItemValue={setSideBarItemValue}
+        sideBarItem={sideBarItem}
         changeFragment={changeFragment}
         removeFragmentHandler={removeFragmentHandler}
         inputUrlValue={inputUrlValue}
@@ -215,11 +156,11 @@ export default function App() {
       />
       <div className="inner">
         <h2>Это шаблон простого письма</h2>
-        <div style={{ width: `${templateSize}px` }} className="inner-border">
+        <div style={{ width: `${size}px` }} className="inner-border">
             <MyTemplate
-              size={templateSize}
+              size={size}
               content={reactQuillValue}
-              addItemHandler={addItemHandler}
+              chooseItemHandler={chooseItemHandler}
               dragStartHandler={dragStartHandler}
               dropHandler={dropHandler}
               dragEndHandler={dragEndHandler}
@@ -232,6 +173,7 @@ export default function App() {
             />
 
           <div className="control-btn">
+  
             <button
               onClick={() => addText()}
               style={{ margin: "20px 10px 0 0", padding: "20px" }}

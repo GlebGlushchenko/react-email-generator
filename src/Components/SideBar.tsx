@@ -2,18 +2,17 @@ import React from "react";
 import ReactQuill from "react-quill";
 import { ReactQuillInterface } from "../App";
 import "../style/SideBar.css";
+import { useItemsStore } from "../state/item.state";
+import { useSideBarStore } from "../state/sideBar.state";
 
 interface SideBarProps {
-  isOpen: boolean;
-  setIsOpen: (open: boolean) => void;
-  choseTemplateSize: (format: string) => void;
   showIframe: () => void;
   renderHtml: () => void;
   clearHandler: () => void;
   setDragOn: (drag: boolean) => void;
   dragOn: boolean;
-  onChangeHandler: (val: string) => void;
-  siteBarRedactorValue: ReactQuillInterface;
+  setSideBarItemValue: (val: string) => void;
+  sideBarItem: ReactQuillInterface
   changeFragment: (obj: ReactQuillInterface) => void;
   removeFragmentHandler?: (item: ReactQuillInterface) => void;
   inputUrlValue: string;
@@ -25,16 +24,13 @@ interface SideBarProps {
 
 const SideBar: React.FC<SideBarProps> = (props) => {
   const {
-    isOpen,
-    setIsOpen,
-    choseTemplateSize,
     showIframe,
     renderHtml,
     clearHandler,
     setDragOn,
     dragOn,
-    onChangeHandler,
-    siteBarRedactorValue,
+    setSideBarItemValue,
+    sideBarItem,
     changeFragment,
     removeFragmentHandler,
     inputUrlValue,
@@ -43,12 +39,24 @@ const SideBar: React.FC<SideBarProps> = (props) => {
     setInputTextValue,
     addLinkButton,
   } = props;
+
+  
+
+  const setTemplateSize = useItemsStore(state => state.setTemplateSize)
+  const setOpenSideBar = useSideBarStore(state => state.setOpenSideBar)
+  const sideBarIsOpen = useSideBarStore(state => state.sideBarIsOpen)
+
+  const choseTemplateSize = (format: string) => {
+    format === "mobile" ? setTemplateSize(400) : setTemplateSize(900);
+  };
+console.log(sideBarItem)
+  
   return (
-    <div className={`side-bar ${isOpen ? "open" : ""}`}>
+    <div className={`side-bar ${sideBarIsOpen ? "open" : ""}`}>
       <nav className="nav">
         <ul className="nav-page-size">
           <li>
-            <button onClick={() => setIsOpen(false)}>Закрыть</button>
+            <button onClick={() => setOpenSideBar(false)}>Закрыть</button>
           </li>
           <li>
             <button onClick={() => choseTemplateSize("mobile")}>📱</button>
@@ -78,19 +86,19 @@ const SideBar: React.FC<SideBarProps> = (props) => {
       <div className="side-bar-redactor">
         <ReactQuill
           theme={"bubble"}
-          onChange={onChangeHandler}
-          value={siteBarRedactorValue?.value}
+          onChange={setSideBarItemValue}
+          value={sideBarItem.value}
         ></ReactQuill>
       </div>
       <div className="side-bar-controls">
         <div>
         <button
           style={{ marginRight: "10px" }}
-          onClick={() => changeFragment(siteBarRedactorValue)}
+          onClick={() => changeFragment(sideBarItem)}
         >
           OK
         </button>
-        <button onClick={() => removeFragmentHandler(siteBarRedactorValue)}>
+        <button onClick={() => removeFragmentHandler(sideBarItem)}>
           Удалить
         </button>
         </div>

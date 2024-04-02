@@ -21,7 +21,7 @@ interface MyTemplateProps {
   addLinkButton: boolean;
 
   reactQuillValue?: ReactQuillInterface[];
-  addItemHandler?: (id: number) => void;
+  chooseItemHandler?: (id: number) => void;
   dragStartHandler?: (item: ReactQuillInterface) => void;
   dropHandler?: (
     e: React.DragEvent<HTMLDivElement>,
@@ -37,7 +37,7 @@ const MyTemplate: React.FC<MyTemplateProps> = (props) => {
   const {
     size,
     reactQuillValue,
-    addItemHandler,
+    chooseItemHandler,
     dragStartHandler,
     dropHandler,
     dragEndHandler,
@@ -46,14 +46,17 @@ const MyTemplate: React.FC<MyTemplateProps> = (props) => {
     inputTextValue,
     inputUrlValue,
     addLinkButton,
+    content
   } = props;
+
+  console.log(content)
   return (
     <>
       <Html lang="ru">
         <Head>
           <Font
             fontFamily="Arial, Helvetica, sans-serif"
-            fallbackFontFamily="Verdana"
+            fallbackFontFamily="Arial"
             // webFont={{
             //   url: "https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2",
             //   format: "woff2",
@@ -65,12 +68,12 @@ const MyTemplate: React.FC<MyTemplateProps> = (props) => {
         <Body>
           <Section width={props.size}>
             <Heading as="h3">Здравствуйте, *|APPEAL_NAME|*!</Heading>
-            {props.content.sort(sortItem).map((item) => {
+            {content.sort(sortItem).map((item) => {
               if (item.value !== "") {
                 return (
                   <MyRow
                     item={item}
-                    addItemHandler={addItemHandler}
+                    chooseItemHandler={chooseItemHandler}
                     dragStartHandler={dragStartHandler}
                     dropHandler={dropHandler}
                     dragEndHandler={dragEndHandler}
@@ -84,8 +87,7 @@ const MyTemplate: React.FC<MyTemplateProps> = (props) => {
                 <EmptyRow
                   item={item}
                   size={size}
-                  content={reactQuillValue}
-                  addItemHandler={addItemHandler}
+                  chooseItemHandler={chooseItemHandler}
                   dragStartHandler={dragStartHandler}
                   dropHandler={dropHandler}
                   dragEndHandler={dragEndHandler}

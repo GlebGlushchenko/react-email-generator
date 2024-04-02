@@ -12,7 +12,7 @@ interface MyRowProps {
   dragEndHandler: (e: React.DragEvent) => void
   dragOverHandler: (e: React.DragEvent) => void
   dropHandler: (e: React.DragEvent<HTMLDivElement>, item: ReactQuillInterface) => void
-  addItemHandler: (id: number) => void
+  chooseItemHandler: (id: number) => void
   dragOn: boolean
   item: ReactQuillInterface
 }
@@ -23,10 +23,11 @@ const MyRow: React.FC<MyRowProps> = (props) => {
     dragEndHandler,
     dragOverHandler,
     dropHandler,
-    addItemHandler,
+    chooseItemHandler,
     dragOn,
     item,
   } = props;
+
   const removePTags = (htmlString: string) =>
     htmlString.replace(/<p[^>]*>(.*?)<\/p>/g, "$1");
   return (
@@ -39,7 +40,7 @@ const MyRow: React.FC<MyRowProps> = (props) => {
       draggable={dragOn}
       key={item.id}
     >
-      <Column className={`column ${item.isActive ? 'active' : ''}`} onClick={() => addItemHandler(item.id)}>
+      <Column className={`column ${item.isActive ? 'active' : ''}`} onClick={() => chooseItemHandler(item.id)}>
         <Paragraph>
           <span
             style={{ textAlign: "left" }}

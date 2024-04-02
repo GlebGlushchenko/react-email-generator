@@ -29,7 +29,6 @@ const MyRow: React.FC<MyRowProps> = (props) => {
   } = props;
   const removePTags = (htmlString: string) =>
     htmlString.replace(/<p[^>]*>(.*?)<\/p>/g, "$1");
-  console.log(item, 'props')
   return (
     <Row
       onDragStart={() => dragStartHandler(item)}

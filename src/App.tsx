@@ -131,7 +131,6 @@ export default function App() {
   };
 
   const changeFragment = (obj) => {
-    console.log(obj, siteBarRedactorValue.value);
     setReactQuillValue((prevState) => {
       return prevState.map((item) => {
         if (item.id === obj.id) {

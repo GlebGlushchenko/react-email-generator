@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Body,
   Font,
   Head,
   Heading,
@@ -13,23 +14,26 @@ import MyButton from "../src/Components/MyButton.js";
 import { ReactQuillInterface } from "../src/App.js";
 
 interface MyTemplateProps {
-  size: number
-  content: ReactQuillInterface[]
-  inputTextValue: string
-  inputUrlValue: string
-  addLinkButton: boolean
+  size: number;
+  content: ReactQuillInterface[];
+  inputTextValue: string;
+  inputUrlValue: string;
+  addLinkButton: boolean;
 
-  reactQuillValue?: ReactQuillInterface[]
-  addItemHandler?: (id: number) => void
-  dragStartHandler?: (item: ReactQuillInterface) => void
-  dropHandler?: (e: React.DragEvent<HTMLDivElement>, item: ReactQuillInterface) => void
-  dragEndHandler?: (e: React.DragEvent<HTMLDivElement>) => void
-  dragOverHandler?: (e: React.DragEvent<HTMLDivElement>) => void
-  dragOn?: boolean
-  removeFragmentHandler?: () => void
-  setAddLinkButton?: (val: boolean) => void
+  reactQuillValue?: ReactQuillInterface[];
+  addItemHandler?: (id: number) => void;
+  dragStartHandler?: (item: ReactQuillInterface) => void;
+  dropHandler?: (
+    e: React.DragEvent<HTMLDivElement>,
+    item: ReactQuillInterface
+  ) => void;
+  dragEndHandler?: (e: React.DragEvent<HTMLDivElement>) => void;
+  dragOverHandler?: (e: React.DragEvent<HTMLDivElement>) => void;
+  dragOn?: boolean;
+  removeFragmentHandler?: () => void;
+  setAddLinkButton?: (val: boolean) => void;
 }
-const MyTemplate:React.FC<MyTemplateProps> = (props) => {
+const MyTemplate: React.FC<MyTemplateProps> = (props) => {
   const {
     size,
     reactQuillValue,
@@ -58,13 +62,29 @@ const MyTemplate:React.FC<MyTemplateProps> = (props) => {
             fontStyle="normal"
           />
         </Head>
-        <Section width={props.size}>
-          <Heading as="h3">Здравствуйте, *|APPEAL_NAME|*!</Heading>
-          {props.content.sort(sortItem).map((item) => {
-            if (item.value !== "") {
+        <Body>
+          <Section width={props.size}>
+            <Heading as="h3">Здравствуйте, *|APPEAL_NAME|*!</Heading>
+            {props.content.sort(sortItem).map((item) => {
+              if (item.value !== "") {
+                return (
+                  <MyRow
+                    item={item}
+                    addItemHandler={addItemHandler}
+                    dragStartHandler={dragStartHandler}
+                    dropHandler={dropHandler}
+                    dragEndHandler={dragEndHandler}
+                    dragOverHandler={dragOverHandler}
+                    dragOn={dragOn}
+                    key={item.id}
+                  />
+                );
+              }
               return (
-                <MyRow
+                <EmptyRow
                   item={item}
+                  size={size}
+                  content={reactQuillValue}
                   addItemHandler={addItemHandler}
                   dragStartHandler={dragStartHandler}
                   dropHandler={dropHandler}
@@ -74,27 +94,13 @@ const MyTemplate:React.FC<MyTemplateProps> = (props) => {
                   key={item.id}
                 />
               );
-            }
-            return (
-              <EmptyRow
-                item={item}
-                size={size}
-                content={reactQuillValue}
-                addItemHandler={addItemHandler}
-                dragStartHandler={dragStartHandler}
-                dropHandler={dropHandler}
-                dragEndHandler={dragEndHandler}
-                dragOverHandler={dragOverHandler}
-                dragOn={dragOn}
-                key={item.id}
-              />
-            );
-          })}
+            })}
 
-          {addLinkButton && (
-            <MyButton url={inputUrlValue} title={inputTextValue} />
-          )}
-        </Section>
+            {addLinkButton && (
+              <MyButton url={inputUrlValue} title={inputTextValue} />
+            )}
+          </Section>
+        </Body>
       </Html>
     </>
   );

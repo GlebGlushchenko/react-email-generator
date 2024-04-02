@@ -6,7 +6,6 @@ import { downloadFile } from "./utils/downloadFile";
 import "react-quill/dist/quill.snow.css";
 import Modal from "./Components/Modal";
 import SideBar from "./Components/SideBar";
-import ReactQillRedactor from "./Components/ReactQillRedactor";
 export interface ReactQuillInterface {
   id: number;
   value: string;
@@ -75,7 +74,7 @@ export default function App() {
   const downloadHtml = (html) => {
     downloadFile(html, "email.html");
   };
-  const addText = (id?: number) => {
+  const addText = () => {
     setReactQuillValue((prev) => {
       return [
         ...prev,

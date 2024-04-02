@@ -6,7 +6,7 @@ import { ReactQuillInterface } from "../App";
 interface ReactQillRedactorProps {
   item: ReactQuillInterface;
   templateSize: number;
-  addText: (id: number) => void;
+  addText: () => void;
   addLinkButton: boolean
   setAddLinkButton: (e: boolean) => void
 }

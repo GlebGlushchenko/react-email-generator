@@ -12,29 +12,31 @@ export interface ReactQuillInterface {
   value: string;
   ItsShow: boolean;
   order: number;
-  isActive: boolean
+  isActive: boolean;
 }
 
 export default function App() {
-  const initialState = [{ id: 1, value: "Это параграф!", ItsShow: true, order: 1, isActive: false }];
+  const initialState = [
+    { id: 1, value: "Это параграф!", ItsShow: true, order: 1, isActive: false },
+  ];
   const [templateSize, setTemplateSize] = React.useState<number>(900);
   const [reactQuillValue, setReactQuillValue] = React.useState<ReactQuillInterface[]>(initialState);
   const [iframeShow, setIframeShow] = React.useState(false);
   const [html, setHtml] = React.useState("");
   const [siteBarRedactorValue, setSideBarRedactorValue] = React.useState(null);
 
-  const [inputUrlValue, setInputUrlValue] = React.useState<string>("");
-  const [inputTextValue, setInputTextValue] = React.useState<string>("");
+  const [inputUrlValue, setInputUrlValue] = React.useState<string>("https://www.google.com/");
+  const [inputTextValue, setInputTextValue] = React.useState<string>("Это кнопка!");
 
-  const [addLinkButton, setAddLinkButton ] = React.useState(false)
+  const [addLinkButton, setAddLinkButton] = React.useState(false);
 
   React.useEffect(() => {
     const data = localStorage.getItem("ReactValue");
 
-    if(data === null || data === '') {
+    if (data === null || data === "") {
       setReactQuillValue(initialState);
-      return
-    } 
+      return;
+    }
     setReactQuillValue(JSON.parse(data));
   }, []);
 
@@ -58,7 +60,13 @@ export default function App() {
 
   const renderHtml = () => {
     const emailHTML = render(
-      <MyTemplate size={templateSize} content={reactQuillValue} inputTextValue={inputTextValue} inputUrlValue={inputUrlValue} addLinkButton={addLinkButton}/>
+      <MyTemplate
+        size={templateSize}
+        content={reactQuillValue}
+        inputTextValue={inputTextValue}
+        inputUrlValue={inputUrlValue}
+        addLinkButton={addLinkButton}
+      />
     );
 
     downloadHtml(emailHTML);
@@ -67,40 +75,20 @@ export default function App() {
   const downloadHtml = (html) => {
     downloadFile(html, "email.html");
   };
-  const addText = (id: number) => {
+  const addText = (id?: number) => {
     setReactQuillValue((prev) => {
       return [
         ...prev,
         {
           id: Date.now(),
           value: "",
-          ItsShow: true,
+          ItsShow: false,
           order: Date.now(),
-          isActive: false
+          isActive: false,
         },
       ];
     });
-    setReactQuillValue((prevState) => {
-      return prevState.map((item) => {
-        if (item.id === id) {
-          return { ...item, ItsShow: false };
-        }
-        return item;
-      });
-    });
-
     localStorage.setItem("ReactValue", JSON.stringify(reactQuillValue));
-  };
-
-  const changeValueHandler = (value, id) => {
-    setReactQuillValue((prevState) => {
-      return prevState.map((item) => {
-        if (item.id === id) {
-          return { ...item, value: value };
-        }
-        return item;
-      });
-    });
   };
 
   const clearHandler = () => {
@@ -111,7 +99,7 @@ export default function App() {
   const addItemHandler = (id: number) => {
     const findElement = reactQuillValue.find((i) => i.id === id);
     toggleNavbar();
-    
+
     setSideBarRedactorValue(findElement);
 
     setReactQuillValue((prev) => {
@@ -119,9 +107,9 @@ export default function App() {
         if (item.id === findElement.id) {
           return { ...item, isActive: true };
         }
-        return { ...item, isActive: false};
+        return { ...item, isActive: false };
       });
-    })
+    });
   };
 
   const onChangeHandler = (val: string) => {
@@ -220,6 +208,7 @@ export default function App() {
         setInputUrlValue={setInputUrlValue}
         inputTextValue={inputTextValue}
         setInputTextValue={setInputTextValue}
+        addLinkButton={addLinkButton}
       />
       <div className="inner">
         <h2>Это шаблон № 1</h2>
@@ -237,24 +226,26 @@ export default function App() {
             addLinkButton={addLinkButton}
             setAddLinkButton={setAddLinkButton}
             inputUrlValue={inputUrlValue}
-
           />
-          {reactQuillValue.map(
-            (item) =>
-              item.ItsShow && (
-                <ReactQillRedactor
-                  item={item}
-                  templateSize={templateSize}
-                  changeValueHandler={changeValueHandler}
-                  addText={addText}
-                  addLinkButton={addLinkButton}
-                  setAddLinkButton={setAddLinkButton}
-                  key={item.id
-                  }
 
-                />
-              )
-          )}
+      <div className="control-btn">
+      <button
+            onClick={() => addText()}
+            style={{ margin: "20px 10px 0 0", padding: "20px" }}
+          >
+            Добавить параграф
+          </button>
+          <button
+            onClick={() => setAddLinkButton(!addLinkButton)}
+            style={{
+              margin: "20px 0 0 0",
+              padding: "20px",
+              backgroundColor: ` ${addLinkButton ? "#e39d98" : ""}`,
+            }}
+          >
+            {`${addLinkButton ? "Удалить" : "Добавить"} кнопку`}
+          </button>
+      </div>
         </div>
       </div>
     </div>

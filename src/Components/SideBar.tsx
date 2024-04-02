@@ -1,7 +1,7 @@
 import React from "react";
 import ReactQuill from "react-quill";
 import { ReactQuillInterface } from "../App";
-import '../style/SideBar.css'
+import "../style/SideBar.css";
 
 interface SideBarProps {
   isOpen: boolean;
@@ -16,10 +16,11 @@ interface SideBarProps {
   siteBarRedactorValue: ReactQuillInterface;
   changeFragment: (obj: ReactQuillInterface) => void;
   removeFragmentHandler?: (item: ReactQuillInterface) => void;
-  inputUrlValue: string
-  setInputUrlValue: (targetValue: string) => void
-  inputTextValue: string
-  setInputTextValue: (targetValue: string) => void
+  inputUrlValue: string;
+  setInputUrlValue: (targetValue: string) => void;
+  inputTextValue: string;
+  setInputTextValue: (targetValue: string) => void;
+  addLinkButton: boolean;
 }
 
 const SideBar: React.FC<SideBarProps> = (props) => {
@@ -39,7 +40,8 @@ const SideBar: React.FC<SideBarProps> = (props) => {
     inputUrlValue,
     setInputUrlValue,
     inputTextValue,
-    setInputTextValue
+    setInputTextValue,
+    addLinkButton,
   } = props;
   return (
     <div className={`side-bar ${isOpen ? "open" : ""}`}>
@@ -80,7 +82,8 @@ const SideBar: React.FC<SideBarProps> = (props) => {
           value={siteBarRedactorValue?.value}
         ></ReactQuill>
       </div>
-      <div style={{ marginTop: "50px" }}>
+      <div className="side-bar-controls">
+        <div>
         <button
           style={{ marginRight: "10px" }}
           onClick={() => changeFragment(siteBarRedactorValue)}
@@ -90,11 +93,26 @@ const SideBar: React.FC<SideBarProps> = (props) => {
         <button onClick={() => removeFragmentHandler(siteBarRedactorValue)}>
           Удалить
         </button>
-        <div className="input-control">
-        <input className="input-control-item" value={inputTextValue} onChange={(e) => setInputTextValue(e.target.value)} type="text" placeholder="Текст для кнопки..." />
-        <input className="input-control-item" value={inputUrlValue} onChange={(e) => setInputUrlValue(e.target.value)} type="text" placeholder="URL..." />
         </div>
         
+        {addLinkButton && (
+          <div className="input-control">
+            <input
+              className="input-control-item"
+              value={inputTextValue}
+              onChange={(e) => setInputTextValue(e.target.value)}
+              type="text"
+              placeholder="Текст для кнопки..."
+            />
+            <input
+              className="input-control-item"
+              value={inputUrlValue}
+              onChange={(e) => setInputUrlValue(e.target.value)}
+              type="text"
+              placeholder="URL..."
+            />
+          </div>
+        )}
       </div>
     </div>
   );

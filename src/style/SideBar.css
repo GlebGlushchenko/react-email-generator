@@ -68,6 +68,15 @@
   margin-right: 0;
 }
 
+.side-bar-controls {
+  align-items: flex-start;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 390px;
+}
+
 .input-control {
   margin-top: 20px;
 }

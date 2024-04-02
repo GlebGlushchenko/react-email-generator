@@ -5,7 +5,7 @@ interface MyButtonProps {
   url: string;
   title: string
 }
-const MyButton: React.FC<MyButtonProps> = ({url = "https://www.google.com/", title }) => {
+const MyButton: React.FC<MyButtonProps> = ({url, title }) => {
   return (
     <Row style={{ paddingTop: "20px" }}>
       <Column style={{ textAlign: "center" }}>
@@ -23,7 +23,8 @@ const MyButton: React.FC<MyButtonProps> = ({url = "https://www.google.com/", tit
             lineHeight: "120%",
           }}
         >
-          {!title ? url : title}
+          {title}
+          {/* {!title ? url : title} */}
         </Button>
       </Column>
     </Row>

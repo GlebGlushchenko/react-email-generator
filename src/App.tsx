@@ -19,13 +19,17 @@ export default function App() {
     { id: 1, value: "Это параграф!", ItsShow: true, order: 1, isActive: false },
   ];
   const [templateSize, setTemplateSize] = React.useState<number>(900);
-  const [reactQuillValue, setReactQuillValue] = React.useState<ReactQuillInterface[]>(initialState);
+  const [reactQuillValue, setReactQuillValue] =
+    React.useState<ReactQuillInterface[]>(initialState);
   const [iframeShow, setIframeShow] = React.useState(false);
   const [html, setHtml] = React.useState("");
   const [siteBarRedactorValue, setSideBarRedactorValue] = React.useState(null);
 
-  const [inputUrlValue, setInputUrlValue] = React.useState<string>("https://www.google.com/");
-  const [inputTextValue, setInputTextValue] = React.useState<string>("Это кнопка!");
+  const [inputUrlValue, setInputUrlValue] = React.useState<string>(
+    "https://www.google.com/"
+  );
+  const [inputTextValue, setInputTextValue] =
+    React.useState<string>("Это кнопка!");
 
   const [addLinkButton, setAddLinkButton] = React.useState(false);
 
@@ -210,41 +214,41 @@ export default function App() {
         addLinkButton={addLinkButton}
       />
       <div className="inner">
-        <h2>Это шаблон № 1</h2>
+        <h2>Это шаблон простого письма</h2>
         <div style={{ width: `${templateSize}px` }} className="inner-border">
-          <MyTemplate
-            size={templateSize}
-            content={reactQuillValue}
-            addItemHandler={addItemHandler}
-            dragStartHandler={dragStartHandler}
-            dropHandler={dropHandler}
-            dragEndHandler={dragEndHandler}
-            dragOverHandler={dragOverHandler}
-            dragOn={dragOn}
-            inputTextValue={inputTextValue}
-            addLinkButton={addLinkButton}
-            setAddLinkButton={setAddLinkButton}
-            inputUrlValue={inputUrlValue}
-          />
+            <MyTemplate
+              size={templateSize}
+              content={reactQuillValue}
+              addItemHandler={addItemHandler}
+              dragStartHandler={dragStartHandler}
+              dropHandler={dropHandler}
+              dragEndHandler={dragEndHandler}
+              dragOverHandler={dragOverHandler}
+              dragOn={dragOn}
+              inputTextValue={inputTextValue}
+              addLinkButton={addLinkButton}
+              setAddLinkButton={setAddLinkButton}
+              inputUrlValue={inputUrlValue}
+            />
 
-      <div className="control-btn">
-      <button
-            onClick={() => addText()}
-            style={{ margin: "20px 10px 0 0", padding: "20px" }}
-          >
-            Добавить параграф
-          </button>
-          <button
-            onClick={() => setAddLinkButton(!addLinkButton)}
-            style={{
-              margin: "20px 0 0 0",
-              padding: "20px",
-              backgroundColor: ` ${addLinkButton ? "#e39d98" : ""}`,
-            }}
-          >
-            {`${addLinkButton ? "Удалить" : "Добавить"} кнопку`}
-          </button>
-      </div>
+          <div className="control-btn">
+            <button
+              onClick={() => addText()}
+              style={{ margin: "20px 10px 0 0", padding: "20px" }}
+            >
+              Добавить параграф
+            </button>
+            <button
+              onClick={() => setAddLinkButton(!addLinkButton)}
+              style={{
+                margin: "20px 0 0 0",
+                padding: "20px",
+                backgroundColor: ` ${addLinkButton ? "#e39d98" : ""}`,
+              }}
+            >
+              {`${addLinkButton ? "Удалить" : "Добавить"} кнопку`}
+            </button>
+          </div>
         </div>
       </div>
     </div>

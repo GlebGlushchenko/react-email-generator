@@ -18,7 +18,6 @@ import { useItemsStore } from "../src/state/item.state.js";
 import { useDragStore } from "../src/state/drag.state.js";
 
 interface MyTemplateProps {
-  size: number;
   content: ReactQuillInterface[];
   inputTextValue: string;
   inputUrlValue: string;
@@ -34,7 +33,6 @@ interface MyTemplateProps {
 }
 const MyTemplate: React.FC<MyTemplateProps> = (props) => {
   const {
-    size,
     inputTextValue,
     inputUrlValue,
     addLinkButton,
@@ -66,8 +64,6 @@ const MyTemplate: React.FC<MyTemplateProps> = (props) => {
     e.preventDefault();
     e.target.classList.add("drag-over");
   };
-
-  console.log(props.size)
 
   return (
     <>
@@ -101,7 +97,6 @@ const MyTemplate: React.FC<MyTemplateProps> = (props) => {
               return (
                 <EmptyRow
                   item={item}
-                  size={size}
                   chooseItemHandler={chooseItemHandler}
                   dragStartHandler={dragStartHandler}
                   dropHandler={changeOrder}

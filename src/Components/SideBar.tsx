@@ -37,7 +37,6 @@ const SideBar: React.FC<SideBarProps> = (props) => {
     changeFragment,
     removeFragmentHandler,
     setSideBarItemValue,
-    templateSize,
     setTemplateSize,
   } = useItemsStore()
 
@@ -48,7 +47,6 @@ const SideBar: React.FC<SideBarProps> = (props) => {
   const renderHtml = () => {
     const emailHTML = render(
       <MyTemplate
-        size={templateSize}
         content={items}
         inputTextValue={inputTextValue}
         inputUrlValue={inputUrlValue}
@@ -63,7 +61,6 @@ const SideBar: React.FC<SideBarProps> = (props) => {
   const renderPreview = () => {
     const emailHTML = render(
       <MyTemplate
-        size={templateSize}
         content={items}
         inputTextValue={inputTextValue}
         inputUrlValue={inputUrlValue}

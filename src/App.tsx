@@ -68,7 +68,6 @@ export default function App() {
         <h2>Это шаблон простого письма</h2>
         <div style={{ width: `${templateSize}px` }} className="inner-border">
             <MyTemplate
-              size={templateSize}
               content={items}
 
               dragOn={dragOn}

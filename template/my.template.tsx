@@ -7,7 +7,6 @@ import {
   Heading,
   Html,
   Img,
-  Section,
 } from "@react-email/components";
 import { sortItem } from "../src/utils/sortItem.js";
 import MyRow from "../src/Components/MyRow.js";
@@ -16,8 +15,6 @@ import MyButton from "../src/Components/MyButton.js";
 import { ReactQuillInterface } from "../src/App.js";
 import { useSideBarStore } from "../src/state/sideBar.state.js";
 import { useItemsStore } from "../src/state/item.state.js";
-import { useDragStore } from "../src/state/drag.state.js";
-
 interface MyTemplateProps {
   content: ReactQuillInterface[];
   addLinkButton: boolean;

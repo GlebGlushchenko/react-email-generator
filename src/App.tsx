@@ -6,7 +6,6 @@ import "react-quill/dist/quill.snow.css";
 import Modal from "./Components/Modal";
 import SideBar from "./Components/SideBar";
 import { useModalStore } from "./state/modal.state";
-import { useDragStore } from "./state/drag.state";
 import { useSideBarStore } from "./state/sideBar.state";
 export interface ReactQuillInterface {
   id?: number;

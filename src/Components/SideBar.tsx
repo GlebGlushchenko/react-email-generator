@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import ReactQuill from "react-quill";
 import "../style/SideBar.css";
 import { useItemsStore } from "../state/item.state";

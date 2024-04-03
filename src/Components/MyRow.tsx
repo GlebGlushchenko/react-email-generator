@@ -1,20 +1,20 @@
 import React from "react";
-import {
-  Column,
-  Row,
-} from "@react-email/components";
+import { Column, Row } from "@react-email/components";
 
 import Paragraph from "./Paragraph";
 import { ReactQuillInterface } from "../App";
 
 interface MyRowProps {
-  dragStartHandler: (item: ReactQuillInterface) => void
-  dragEndHandler: (e: React.DragEvent) => void
-  dragOverHandler: (e: React.DragEvent) => void
-  dropHandler: (e: React.DragEvent<HTMLDivElement>, item: ReactQuillInterface) => void
-  chooseItemHandler: (id: number) => void
-  dragOn: boolean
-  item: ReactQuillInterface
+  dragStartHandler: (item: ReactQuillInterface) => void;
+  dragEndHandler: (e: React.DragEvent) => void;
+  dragOverHandler: (e: React.DragEvent) => void;
+  dropHandler: (
+    e: React.DragEvent<HTMLDivElement>,
+    item: ReactQuillInterface
+  ) => void;
+  chooseItemHandler: (id: number) => void;
+  dragOn: boolean;
+  item: ReactQuillInterface;
 }
 
 const MyRow: React.FC<MyRowProps> = (props) => {
@@ -40,12 +40,16 @@ const MyRow: React.FC<MyRowProps> = (props) => {
       draggable={dragOn}
       key={item.id}
     >
-      <Column style={{fontSize: "14px"}} className={`column ${item.isActive ? 'active' : ''}`} onClick={() => chooseItemHandler(item.id)}>
+      <Column
+        style={{ fontSize: "14px" }}
+        className={`column ${item.isActive ? "active" : ""}`}
+        onClick={() => chooseItemHandler(item.id)}
+      >
         <Paragraph>
           <span
-            style={{ textAlign: "left", }}
+            style={{ textAlign: "left" }}
             dangerouslySetInnerHTML={{
-              __html: removePTags(item.value)
+              __html: removePTags(item.value),
             }}
           ></span>
         </Paragraph>

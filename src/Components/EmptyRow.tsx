@@ -23,7 +23,7 @@ const EmptyRow = (props) => {
     >
       <Column
         style={{ padding: "10px 0" }}
-        className={`column empty ${item.isActive ? 'active' : ''}`}
+        className={`column empty ${item.isActive ? "active" : ""}`}
         onClick={() => chooseItemHandler(item.id)}
       ></Column>
     </Row>

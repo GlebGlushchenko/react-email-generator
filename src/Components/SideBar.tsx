@@ -38,13 +38,13 @@ const SideBar: React.FC<SideBarProps> = (props) => {
     removeFragmentHandler,
     setSideBarItemValue,
     setTemplateSize,
-  } = useItemsStore()
+  } = useItemsStore();
 
-  const { iframeShow, setIframeShow } = useModalStore()
+  const { iframeShow, setIframeShow } = useModalStore();
 
-  const { setOpenSideBar, sideBarIsOpen } = useSideBarStore()
-  const { showImg, setImgUrl, imgUrl } = useItemsStore()
-  
+  const { setOpenSideBar, sideBarIsOpen } = useSideBarStore();
+  const { showImg, setImgUrl, imgUrl } = useItemsStore();
+
   const renderHtml = () => {
     const emailHTML = render(
       <MyTemplate
@@ -60,7 +60,6 @@ const SideBar: React.FC<SideBarProps> = (props) => {
     downloadFile(emailHTML, "email.html");
   };
 
-  
   const renderPreview = () => {
     const emailHTML = render(
       <MyTemplate
@@ -127,17 +126,17 @@ const SideBar: React.FC<SideBarProps> = (props) => {
       </div>
       <div className="side-bar-controls">
         <div>
-        <button
-          style={{ marginRight: "10px" }}
-          onClick={() => changeFragment(sideBarItem)}
-        >
-          OK
-        </button>
-        <button onClick={() => removeFragmentHandler(sideBarItem)}>
-          Удалить
-        </button>
+          <button
+            style={{ marginRight: "10px" }}
+            onClick={() => changeFragment(sideBarItem)}
+          >
+            OK
+          </button>
+          <button onClick={() => removeFragmentHandler(sideBarItem)}>
+            Удалить
+          </button>
         </div>
-        
+
         {addLinkButton && (
           <div className="input-control">
             <input
@@ -165,7 +164,6 @@ const SideBar: React.FC<SideBarProps> = (props) => {
               type="text"
               placeholder="Ссылка на картинку..."
             />
-           
           </div>
         )}
       </div>

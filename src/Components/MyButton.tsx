@@ -3,9 +3,9 @@ import React from "react";
 
 interface MyButtonProps {
   url: string;
-  title: string
+  title: string;
 }
-const MyButton: React.FC<MyButtonProps> = ({url, title }) => {
+const MyButton: React.FC<MyButtonProps> = ({ url, title }) => {
   return (
     <Row style={{ paddingTop: "20px" }}>
       <Column style={{ textAlign: "center" }}>

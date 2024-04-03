@@ -21,7 +21,7 @@ interface useItemsStoreInterface {
   imgUrl: string;
   setShowImg: (bol: boolean) => void;
   showImg: boolean;
-  setImgUrl: (url: string) => void
+  setImgUrl: (url: string) => void;
 }
 
 const initialState: ReactQuillInterface[] = [

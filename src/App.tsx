@@ -16,7 +16,6 @@ export interface ReactQuillInterface {
 }
 
 export default function App() {
-  
   const [addLinkButton, setAddLinkButton] = useState(false);
 
   const [inputUrlValue, setInputUrlValue] = useState<string>(
@@ -32,15 +31,15 @@ export default function App() {
     setItems,
     showImg,
     setShowImg,
-    imgUrl
-  } = useItemsStore()
-  
-  const { iframeShow } = useModalStore()
-  
+    imgUrl,
+  } = useItemsStore();
+
+  const { iframeShow } = useModalStore();
+
   React.useEffect(() => {
     const data: [] | null | string = localStorage.getItem("ReactState");
-    const x = JSON.parse(data)
-    if (x === null || x === "" || x.length === 0 || x === '[]')  {
+    const x = JSON.parse(data);
+    if (x === null || x === "" || x.length === 0 || x === "[]") {
       setItems(items);
       return;
     }
@@ -48,10 +47,9 @@ export default function App() {
   }, []);
 
   React.useEffect(() => {
-    localStorage.setItem("ReactState",JSON.stringify(items))
-    
-  }, [items])
-  const { dragOn, setDragOn } = useDragStore()
+    localStorage.setItem("ReactState", JSON.stringify(items));
+  }, [items]);
+  const { dragOn, setDragOn } = useDragStore();
 
   return (
     <div className="wrapper">
@@ -59,50 +57,43 @@ export default function App() {
       <SideBar
         setDragOn={setDragOn}
         dragOn={dragOn}
-
         inputUrlValue={inputUrlValue}
         setInputUrlValue={setInputUrlValue}
         inputTextValue={inputTextValue}
         setInputTextValue={setInputTextValue}
-        
         addLinkButton={addLinkButton}
       />
       <div className="inner">
         <h2>Это шаблон простого письма</h2>
         <div style={{ width: `${templateSize}px` }} className="inner-border">
-            <MyTemplate
-              content={items}
-              imgUrl={imgUrl}
-              dragOn={dragOn}
-              showImg={showImg}
-              inputTextValue={inputTextValue}
-              addLinkButton={addLinkButton}
-              setAddLinkButton={setAddLinkButton}
-              inputUrlValue={inputUrlValue}
-            />
+          <MyTemplate
+            content={items}
+            imgUrl={imgUrl}
+            dragOn={dragOn}
+            showImg={showImg}
+            inputTextValue={inputTextValue}
+            addLinkButton={addLinkButton}
+            setAddLinkButton={setAddLinkButton}
+            inputUrlValue={inputUrlValue}
+          />
 
           <div className="control-btn">
-            <button
-              onClick={() => addText()}
-              style={{ margin: "20px 10px 0 0", padding: "20px" }}
-            >
+            <button className="btn" onClick={() => addText()}>
               Добавить параграф
             </button>
             <button
+              className="btn"
               onClick={() => setAddLinkButton(!addLinkButton)}
               style={{
-                margin: "20px 10px 0 0",
-                padding: "20px",
                 backgroundColor: ` ${addLinkButton ? "#e39d98" : ""}`,
               }}
             >
               {`${addLinkButton ? "Удалить" : "Добавить"} кнопку`}
             </button>
             <button
+              className="btn"
               onClick={() => setShowImg(!showImg)}
               style={{
-                margin: "20px 0 0 0",
-                padding: "20px",
                 backgroundColor: ` ${showImg ? "#e39d98" : ""}`,
               }}
             >

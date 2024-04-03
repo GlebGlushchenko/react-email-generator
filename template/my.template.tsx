@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Body,
+  Container,
   Font,
   Head,
   Heading,
@@ -12,6 +13,9 @@ import MyRow from "../src/Components/MyRow.js";
 import EmptyRow from "../src/Components/EmptyRow.js";
 import MyButton from "../src/Components/MyButton.js";
 import { ReactQuillInterface } from "../src/App.js";
+import { useSideBarStore } from "../src/state/sideBar.state.js";
+import { useItemsStore } from "../src/state/item.state.js";
+import { useDragStore } from "../src/state/drag.state.js";
 
 interface MyTemplateProps {
   size: number;
@@ -21,12 +25,7 @@ interface MyTemplateProps {
   addLinkButton: boolean;
 
   reactQuillValue?: ReactQuillInterface[];
-  chooseItemHandler?: (id: number) => void;
   dragStartHandler?: (item: ReactQuillInterface) => void;
-  dropHandler?: (
-    e: React.DragEvent<HTMLDivElement>,
-    item: ReactQuillInterface
-  ) => void;
   dragEndHandler?: (e: React.DragEvent<HTMLDivElement>) => void;
   dragOverHandler?: (e: React.DragEvent<HTMLDivElement>) => void;
   dragOn?: boolean;
@@ -36,20 +35,40 @@ interface MyTemplateProps {
 const MyTemplate: React.FC<MyTemplateProps> = (props) => {
   const {
     size,
-    reactQuillValue,
-    chooseItemHandler,
-    dragStartHandler,
-    dropHandler,
-    dragEndHandler,
-    dragOverHandler,
-    dragOn,
     inputTextValue,
     inputUrlValue,
     addLinkButton,
-    content
+    content,
+    dragOn
   } = props;
 
-  console.log(content)
+  const setOpenSideBar = useSideBarStore(state => state.setOpenSideBar)
+
+  const {setSideBarRedactorItem, setCurrentItem, chooseItem, changeOrder} = useItemsStore()
+
+  const chooseItemHandler = (id: number) => {
+    const findElement = content.find((i) => i.id === id);
+    setOpenSideBar(true);
+
+    setSideBarRedactorItem(findElement);
+    chooseItem(id)
+  };
+
+  const dragStartHandler = (item: ReactQuillInterface) => {
+    setCurrentItem(item);
+  };
+
+  const dragEndHandler = (e) => {
+    e.target.classList.remove("drag-over");
+  };
+
+  const dragOverHandler = (e) => {
+    e.preventDefault();
+    e.target.classList.add("drag-over");
+  };
+
+  console.log(props.size)
+
   return (
     <>
       <Html lang="ru">
@@ -57,17 +76,13 @@ const MyTemplate: React.FC<MyTemplateProps> = (props) => {
           <Font
             fontFamily="Arial, Helvetica, sans-serif"
             fallbackFontFamily="Arial"
-            // webFont={{
-            //   url: "https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2",
-            //   format: "woff2",
-            // }}
             fontWeight={400}
             fontStyle="normal"
           />
         </Head>
         <Body>
-          <Section width={props.size}>
-            <Heading as="h3">Здравствуйте, *|APPEAL_NAME|*!</Heading>
+          <Container>
+            <Heading as="h2">Здравствуйте, *|APPEAL_NAME|*!</Heading>
             {content.sort(sortItem).map((item) => {
               if (item.value !== "") {
                 return (
@@ -75,7 +90,7 @@ const MyTemplate: React.FC<MyTemplateProps> = (props) => {
                     item={item}
                     chooseItemHandler={chooseItemHandler}
                     dragStartHandler={dragStartHandler}
-                    dropHandler={dropHandler}
+                    dropHandler={changeOrder}
                     dragEndHandler={dragEndHandler}
                     dragOverHandler={dragOverHandler}
                     dragOn={dragOn}
@@ -89,7 +104,7 @@ const MyTemplate: React.FC<MyTemplateProps> = (props) => {
                   size={size}
                   chooseItemHandler={chooseItemHandler}
                   dragStartHandler={dragStartHandler}
-                  dropHandler={dropHandler}
+                  dropHandler={changeOrder}
                   dragEndHandler={dragEndHandler}
                   dragOverHandler={dragOverHandler}
                   dragOn={dragOn}
@@ -101,7 +116,7 @@ const MyTemplate: React.FC<MyTemplateProps> = (props) => {
             {addLinkButton && (
               <MyButton url={inputUrlValue} title={inputTextValue} />
             )}
-          </Section>
+          </Container>
         </Body>
       </Html>
     </>

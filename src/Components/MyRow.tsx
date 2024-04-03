@@ -40,10 +40,10 @@ const MyRow: React.FC<MyRowProps> = (props) => {
       draggable={dragOn}
       key={item.id}
     >
-      <Column className={`column ${item.isActive ? 'active' : ''}`} onClick={() => chooseItemHandler(item.id)}>
+      <Column style={{fontSize: "14px"}} className={`column ${item.isActive ? 'active' : ''}`} onClick={() => chooseItemHandler(item.id)}>
         <Paragraph>
           <span
-            style={{ textAlign: "left" }}
+            style={{ textAlign: "left", }}
             dangerouslySetInnerHTML={{
               __html: removePTags(item.value)
             }}

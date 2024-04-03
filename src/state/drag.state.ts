@@ -12,8 +12,6 @@ export const useDragStore = create<useDragStoreInterface>((set) => ({
   dragOn: true,
   setCurrentItem: (obj) => set({currentItem: obj}),
   setDragOn: () => set((state) => ({ dragOn: !state.dragOn })),
-  
-  
 }))
 
 

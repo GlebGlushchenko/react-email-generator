@@ -1,20 +1,16 @@
 import React from "react";
 import ReactQuill from "react-quill";
-import { ReactQuillInterface } from "../App";
 import "../style/SideBar.css";
 import { useItemsStore } from "../state/item.state";
 import { useSideBarStore } from "../state/sideBar.state";
+import MyTemplate from "../../template/my.template";
+import { render } from "@react-email/components";
+import { downloadFile } from "../utils/downloadFile";
+import { useModalStore } from "../state/modal.state";
 
 interface SideBarProps {
-  showIframe: () => void;
-  renderHtml: () => void;
-  clearHandler: () => void;
   setDragOn: (drag: boolean) => void;
   dragOn: boolean;
-  setSideBarItemValue: (val: string) => void;
-  sideBarItem: ReactQuillInterface
-  changeFragment: (obj: ReactQuillInterface) => void;
-  removeFragmentHandler?: (item: ReactQuillInterface) => void;
   inputUrlValue: string;
   setInputUrlValue: (targetValue: string) => void;
   inputTextValue: string;
@@ -24,15 +20,8 @@ interface SideBarProps {
 
 const SideBar: React.FC<SideBarProps> = (props) => {
   const {
-    showIframe,
-    renderHtml,
-    clearHandler,
     setDragOn,
     dragOn,
-    setSideBarItemValue,
-    sideBarItem,
-    changeFragment,
-    removeFragmentHandler,
     inputUrlValue,
     setInputUrlValue,
     inputTextValue,
@@ -40,17 +29,60 @@ const SideBar: React.FC<SideBarProps> = (props) => {
     addLinkButton,
   } = props;
 
-  
+  const {
+    items,
+    setHtml,
+    allClear,
+    sideBarItem,
+    changeFragment,
+    removeFragmentHandler,
+    setSideBarItemValue,
+    templateSize,
+    setTemplateSize,
+  } = useItemsStore()
 
-  const setTemplateSize = useItemsStore(state => state.setTemplateSize)
-  const setOpenSideBar = useSideBarStore(state => state.setOpenSideBar)
-  const sideBarIsOpen = useSideBarStore(state => state.sideBarIsOpen)
+  const { iframeShow, setIframeShow } = useModalStore()
+
+  const { setOpenSideBar, sideBarIsOpen } = useSideBarStore()
+  
+  const renderHtml = () => {
+    const emailHTML = render(
+      <MyTemplate
+        size={templateSize}
+        content={items}
+        inputTextValue={inputTextValue}
+        inputUrlValue={inputUrlValue}
+        addLinkButton={addLinkButton}
+      />
+    );
+
+    downloadFile(emailHTML, "email.html");
+  };
+
+  
+  const renderPreview = () => {
+    const emailHTML = render(
+      <MyTemplate
+        size={templateSize}
+        content={items}
+        inputTextValue={inputTextValue}
+        inputUrlValue={inputUrlValue}
+        addLinkButton={addLinkButton}
+      />
+    );
+
+    setHtml(emailHTML);
+  };
+
+  const showIframe = () => {
+    renderPreview();
+    setIframeShow(!iframeShow);
+  };
 
   const choseTemplateSize = (format: string) => {
     format === "mobile" ? setTemplateSize(400) : setTemplateSize(900);
   };
-console.log(sideBarItem)
-  
+
   return (
     <div className={`side-bar ${sideBarIsOpen ? "open" : ""}`}>
       <nav className="nav">
@@ -73,7 +105,7 @@ console.log(sideBarItem)
             <button onClick={renderHtml}>Получить HTML</button>
           </li>
           <li>
-            <button onClick={clearHandler}>Очистить</button>
+            <button onClick={allClear}>Очистить</button>
           </li>
         </ul>
       </nav>

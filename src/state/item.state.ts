@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { ReactQuillInterface } from "../App";
 interface useItemsStoreInterface {
   items: ReactQuillInterface[];
-  sideBarItem: {};
+  sideBarItem: ReactQuillInterface;
   templateSize: number;
   setTemplateSize: (size: number) => void;
   html: string;

@@ -7,6 +7,7 @@ import Modal from "./Components/Modal";
 import SideBar from "./Components/SideBar";
 import { useModalStore } from "./state/modal.state";
 import { useDragStore } from "./state/drag.state";
+import { useSideBarStore } from "./state/sideBar.state";
 export interface ReactQuillInterface {
   id?: number;
   value?: string;
@@ -18,10 +19,7 @@ export interface ReactQuillInterface {
 export default function App() {
   const [addLinkButton, setAddLinkButton] = useState(false);
 
-  const [inputUrlValue, setInputUrlValue] = useState<string>(
-    "https://www.google.com/"
-  );
-  const [inputTextValue, setInputTextValue] = useState<string>("Это кнопка!");
+ 
 
   const {
     templateSize,
@@ -35,6 +33,7 @@ export default function App() {
   } = useItemsStore();
 
   const { iframeShow } = useModalStore();
+  const { inputTextValue, inputUrlValue} = useSideBarStore();
 
   React.useEffect(() => {
     const data: [] | null | string = localStorage.getItem("ReactState");
@@ -49,18 +48,11 @@ export default function App() {
   React.useEffect(() => {
     localStorage.setItem("ReactState", JSON.stringify(items));
   }, [items]);
-  const { dragOn, setDragOn } = useDragStore();
-
+  console.log('APP RENDER')
   return (
     <div className="wrapper">
       {iframeShow && <Modal html={html} />}
       <SideBar
-        setDragOn={setDragOn}
-        dragOn={dragOn}
-        inputUrlValue={inputUrlValue}
-        setInputUrlValue={setInputUrlValue}
-        inputTextValue={inputTextValue}
-        setInputTextValue={setInputTextValue}
         addLinkButton={addLinkButton}
       />
       <div className="inner">
@@ -69,11 +61,10 @@ export default function App() {
           <MyTemplate
             content={items}
             imgUrl={imgUrl}
-            dragOn={dragOn}
             showImg={showImg}
-            inputTextValue={inputTextValue}
             addLinkButton={addLinkButton}
             setAddLinkButton={setAddLinkButton}
+            inputTextValue={inputTextValue}
             inputUrlValue={inputUrlValue}
           />
 

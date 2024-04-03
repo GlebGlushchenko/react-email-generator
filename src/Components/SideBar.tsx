@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import ReactQuill from "react-quill";
 import "../style/SideBar.css";
 import { useItemsStore } from "../state/item.state";
@@ -7,25 +7,14 @@ import MyTemplate from "../../template/my.template";
 import { render } from "@react-email/components";
 import { downloadFile } from "../utils/downloadFile";
 import { useModalStore } from "../state/modal.state";
+import { useDragStore } from "../state/drag.state";
 
 interface SideBarProps {
-  setDragOn: (drag: boolean) => void;
-  dragOn: boolean;
-  inputUrlValue: string;
-  setInputUrlValue: (targetValue: string) => void;
-  inputTextValue: string;
-  setInputTextValue: (targetValue: string) => void;
   addLinkButton: boolean;
 }
 
-const SideBar: React.FC<SideBarProps> = (props) => {
+ const SideBar: React.FC<SideBarProps> = (props) => {
   const {
-    setDragOn,
-    dragOn,
-    inputUrlValue,
-    setInputUrlValue,
-    inputTextValue,
-    setInputTextValue,
     addLinkButton,
   } = props;
 
@@ -42,18 +31,20 @@ const SideBar: React.FC<SideBarProps> = (props) => {
 
   const { iframeShow, setIframeShow } = useModalStore();
 
-  const { setOpenSideBar, sideBarIsOpen } = useSideBarStore();
+  const { setOpenSideBar, sideBarIsOpen, setInputUrlValue, inputUrlValue, inputTextValue, setInputTextValue } = useSideBarStore();
   const { showImg, setImgUrl, imgUrl } = useItemsStore();
+  const { dragOn, setDragOn } = useDragStore();
+
 
   const renderHtml = () => {
     const emailHTML = render(
       <MyTemplate
         content={items}
-        inputTextValue={inputTextValue}
-        inputUrlValue={inputUrlValue}
         addLinkButton={addLinkButton}
         showImg={showImg}
         imgUrl={imgUrl}
+        inputUrlValue={inputUrlValue}
+        inputTextValue={inputTextValue}
       />
     );
 
@@ -64,11 +55,11 @@ const SideBar: React.FC<SideBarProps> = (props) => {
     const emailHTML = render(
       <MyTemplate
         content={items}
-        inputTextValue={inputTextValue}
-        inputUrlValue={inputUrlValue}
         addLinkButton={addLinkButton}
         showImg={showImg}
         imgUrl={imgUrl}
+        inputUrlValue={inputUrlValue}
+        inputTextValue={inputTextValue}
       />
     );
 
@@ -83,6 +74,7 @@ const SideBar: React.FC<SideBarProps> = (props) => {
   const choseTemplateSize = (format: string) => {
     format === "mobile" ? setTemplateSize(400) : setTemplateSize(900);
   };
+  console.log('SIDE-BAR RENDER')
 
   return (
     <div className={`side-bar ${sideBarIsOpen ? "open" : ""}`}>
@@ -111,7 +103,7 @@ const SideBar: React.FC<SideBarProps> = (props) => {
         </ul>
       </nav>
       <button
-        onClick={() => setDragOn(!dragOn)}
+        onClick={() => setDragOn()}
         className={`${dragOn ? "drag-on" : ""}`}
       >{`drag and drop - ${dragOn ? " Включён" : "Выключен"}`}</button>
       <p>Редактирование</p>

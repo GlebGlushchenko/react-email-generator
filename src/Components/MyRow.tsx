@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Column, Row } from "@react-email/components";
 
 import Paragraph from "./Paragraph";
 import { ReactQuillInterface } from "../App";
+import { useDragStore } from "../state/drag.state";
+import { removePTags } from "../utils/removeTags";
 
 interface MyRowProps {
   dragStartHandler: (item: ReactQuillInterface) => void;
@@ -13,7 +15,6 @@ interface MyRowProps {
     item: ReactQuillInterface
   ) => void;
   chooseItemHandler: (id: number) => void;
-  dragOn: boolean;
   item: ReactQuillInterface;
 }
 
@@ -24,13 +25,12 @@ const MyRow: React.FC<MyRowProps> = (props) => {
     dragOverHandler,
     dropHandler,
     chooseItemHandler,
-    dragOn,
     item,
   } = props;
 
-  const removePTags = (htmlString: string) =>
-    htmlString.replace(/<p[^>]*>(.*?)<\/p>/g, "$1");
-  return (
+  const { dragOn } = useDragStore();
+
+  const memoizedComponent = useMemo(() => (
     <Row
       onDragStart={() => dragStartHandler(item)}
       onDragLeave={(e) => dragEndHandler(e)}
@@ -55,7 +55,9 @@ const MyRow: React.FC<MyRowProps> = (props) => {
         </Paragraph>
       </Column>
     </Row>
-  );
+  ), [item]);
+
+  return memoizedComponent;
 };
 
 export default MyRow;

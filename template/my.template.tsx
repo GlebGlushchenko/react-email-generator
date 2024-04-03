@@ -20,8 +20,6 @@ import { useDragStore } from "../src/state/drag.state.js";
 
 interface MyTemplateProps {
   content: ReactQuillInterface[];
-  inputTextValue: string;
-  inputUrlValue: string;
   addLinkButton: boolean;
 
   reactQuillValue?: ReactQuillInterface[];
@@ -33,16 +31,18 @@ interface MyTemplateProps {
   setAddLinkButton?: (val: boolean) => void;
   imgUrl: string
   showImg: boolean
+
+  inputUrlValue?:string
+  inputTextValue?: string
 }
 const MyTemplate: React.FC<MyTemplateProps> = (props) => {
   const {
-    inputTextValue,
-    inputUrlValue,
     addLinkButton,
     content,
-    dragOn,
     imgUrl,
-    showImg
+    showImg,
+    inputUrlValue,
+    inputTextValue
   } = props;
 
 const {setOpenSideBar} = useSideBarStore()
@@ -69,6 +69,7 @@ const {setOpenSideBar} = useSideBarStore()
     e.preventDefault();
     e.target.classList.add("drag-over");
   };
+  console.log('MY TEMPLATE RENDER')
 
   return (
     <>
@@ -102,7 +103,6 @@ const {setOpenSideBar} = useSideBarStore()
                     dropHandler={changeOrder}
                     dragEndHandler={dragEndHandler}
                     dragOverHandler={dragOverHandler}
-                    dragOn={dragOn}
                     key={item.id}
                   />
                 );
@@ -115,14 +115,13 @@ const {setOpenSideBar} = useSideBarStore()
                   dropHandler={changeOrder}
                   dragEndHandler={dragEndHandler}
                   dragOverHandler={dragOverHandler}
-                  dragOn={dragOn}
                   key={item.id}
                 />
               );
             })}
 
             {addLinkButton && (
-              <MyButton url={inputUrlValue} title={inputTextValue} />
+              <MyButton url={inputUrlValue} title={inputTextValue}/>
             )}
           </Container>
         </Body>

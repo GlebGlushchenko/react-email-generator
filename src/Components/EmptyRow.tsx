@@ -1,4 +1,5 @@
 import { Column, Row } from "@react-email/components";
+import { useDragStore } from "../state/drag.state";
 
 const EmptyRow = (props) => {
   const {
@@ -7,9 +8,9 @@ const EmptyRow = (props) => {
     dragOverHandler,
     dropHandler,
     chooseItemHandler,
-    dragOn,
     item,
   } = props;
+  const { dragOn } = useDragStore();
 
   return (
     <Row

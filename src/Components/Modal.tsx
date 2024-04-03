@@ -17,7 +17,7 @@ const Modal: React.FC<ModalProps> = ({ html }) => {
       document.body.classList.remove("modal-open");
     }
   }, [iframeShow]);
-
+  console.log('MODAL RENDER')
   return (
     <div className="modal">
       <div className="modal-content">

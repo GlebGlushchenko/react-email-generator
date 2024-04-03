@@ -18,6 +18,10 @@ interface useItemsStoreInterface {
   changeOrder: (e: any, obj: ReactQuillInterface) => void;
   currentItem: {};
   setCurrentItem: (obj: ReactQuillInterface) => void;
+  imgUrl: string;
+  setShowImg: (bol: boolean) => void;
+  showImg: boolean;
+  setImgUrl: (url: string) => void
 }
 
 const initialState: ReactQuillInterface[] = [
@@ -28,6 +32,9 @@ export const useItemsStore = create<useItemsStoreInterface>((set) => ({
   items: [],
   sideBarItem: {},
   currentItem: {},
+  imgUrl: "",
+  showImg: false,
+  setShowImg: (bol) => set(() => ({ showImg: bol })),
   html: "",
   templateSize: 900,
   setTemplateSize: (size) => set(() => ({ templateSize: size })),
@@ -45,17 +52,17 @@ export const useItemsStore = create<useItemsStoreInterface>((set) => ({
             isActive: false,
           },
         ],
-      }
-     
-      return newItem
+      };
+
+      return newItem;
     }),
 
   allClear: () => set(() => ({ items: initialState })),
 
   setItems: (newItem) =>
     set((state) => {
-      const newState = {items: [...state.items, ...newItem],}
-      return newState
+      const newState = { items: [...state.items, ...newItem] };
+      return newState;
     }),
 
   chooseItem: (id: number) =>
@@ -96,6 +103,7 @@ export const useItemsStore = create<useItemsStoreInterface>((set) => ({
     }),
 
   setCurrentItem: (newObject) => set({ currentItem: newObject }),
+  setImgUrl: (url) => set({ imgUrl: url }),
 
   changeOrder: (e, item) =>
     set((state: any) => {

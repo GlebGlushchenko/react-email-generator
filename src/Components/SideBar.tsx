@@ -43,6 +43,7 @@ const SideBar: React.FC<SideBarProps> = (props) => {
   const { iframeShow, setIframeShow } = useModalStore()
 
   const { setOpenSideBar, sideBarIsOpen } = useSideBarStore()
+  const { showImg, setImgUrl, imgUrl } = useItemsStore()
   
   const renderHtml = () => {
     const emailHTML = render(
@@ -51,6 +52,8 @@ const SideBar: React.FC<SideBarProps> = (props) => {
         inputTextValue={inputTextValue}
         inputUrlValue={inputUrlValue}
         addLinkButton={addLinkButton}
+        showImg={showImg}
+        imgUrl={imgUrl}
       />
     );
 
@@ -65,6 +68,8 @@ const SideBar: React.FC<SideBarProps> = (props) => {
         inputTextValue={inputTextValue}
         inputUrlValue={inputUrlValue}
         addLinkButton={addLinkButton}
+        showImg={showImg}
+        imgUrl={imgUrl}
       />
     );
 
@@ -117,6 +122,7 @@ const SideBar: React.FC<SideBarProps> = (props) => {
           theme={"bubble"}
           onChange={setSideBarItemValue}
           value={sideBarItem.value}
+          placeholder=" 👈 - - - - Это разделитель - - - - 👉 "
         ></ReactQuill>
       </div>
       <div className="side-bar-controls">
@@ -148,6 +154,18 @@ const SideBar: React.FC<SideBarProps> = (props) => {
               type="text"
               placeholder="URL..."
             />
+          </div>
+        )}
+        {showImg && (
+          <div className="input-control">
+            <input
+              className="input-control-item"
+              value={imgUrl}
+              onChange={(e) => setImgUrl(e.target.value)}
+              type="text"
+              placeholder="Ссылка на картинку..."
+            />
+           
           </div>
         )}
       </div>

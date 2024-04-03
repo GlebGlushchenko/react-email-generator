@@ -6,6 +6,7 @@ import {
   Head,
   Heading,
   Html,
+  Img,
   Section,
 } from "@react-email/components";
 import { sortItem } from "../src/utils/sortItem.js";
@@ -30,6 +31,8 @@ interface MyTemplateProps {
   dragOn?: boolean;
   removeFragmentHandler?: () => void;
   setAddLinkButton?: (val: boolean) => void;
+  imgUrl: string
+  showImg: boolean
 }
 const MyTemplate: React.FC<MyTemplateProps> = (props) => {
   const {
@@ -37,10 +40,12 @@ const MyTemplate: React.FC<MyTemplateProps> = (props) => {
     inputUrlValue,
     addLinkButton,
     content,
-    dragOn
+    dragOn,
+    imgUrl,
+    showImg
   } = props;
 
-  const setOpenSideBar = useSideBarStore(state => state.setOpenSideBar)
+const {setOpenSideBar} = useSideBarStore()
 
   const {setSideBarRedactorItem, setCurrentItem, chooseItem, changeOrder} = useItemsStore()
 
@@ -78,6 +83,14 @@ const MyTemplate: React.FC<MyTemplateProps> = (props) => {
         </Head>
         <Body>
           <Container>
+
+            
+          {showImg && <Img
+            src={imgUrl === '' ? 'https://placehold.co/600x300' : imgUrl}
+            alt="Обложка"
+            height={300}
+            style={{ margin: "auto" }}
+          />}
             <Heading as="h2">Здравствуйте, *|APPEAL_NAME|*!</Heading>
             {content.sort(sortItem).map((item) => {
               if (item.value !== "") {

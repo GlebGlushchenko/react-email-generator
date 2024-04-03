@@ -30,6 +30,9 @@ export default function App() {
     items,
     addText,
     setItems,
+    showImg,
+    setShowImg,
+    imgUrl
   } = useItemsStore()
   
   const { iframeShow } = useModalStore()
@@ -69,9 +72,9 @@ export default function App() {
         <div style={{ width: `${templateSize}px` }} className="inner-border">
             <MyTemplate
               content={items}
-
+              imgUrl={imgUrl}
               dragOn={dragOn}
-
+              showImg={showImg}
               inputTextValue={inputTextValue}
               addLinkButton={addLinkButton}
               setAddLinkButton={setAddLinkButton}
@@ -79,7 +82,6 @@ export default function App() {
             />
 
           <div className="control-btn">
-  
             <button
               onClick={() => addText()}
               style={{ margin: "20px 10px 0 0", padding: "20px" }}
@@ -89,12 +91,22 @@ export default function App() {
             <button
               onClick={() => setAddLinkButton(!addLinkButton)}
               style={{
-                margin: "20px 0 0 0",
+                margin: "20px 10px 0 0",
                 padding: "20px",
                 backgroundColor: ` ${addLinkButton ? "#e39d98" : ""}`,
               }}
             >
               {`${addLinkButton ? "Удалить" : "Добавить"} кнопку`}
+            </button>
+            <button
+              onClick={() => setShowImg(!showImg)}
+              style={{
+                margin: "20px 0 0 0",
+                padding: "20px",
+                backgroundColor: ` ${showImg ? "#e39d98" : ""}`,
+              }}
+            >
+              {`${showImg ? "Удалить" : "Добавить"} обложку`}
             </button>
           </div>
         </div>

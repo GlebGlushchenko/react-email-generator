@@ -1,20 +1,21 @@
-import React from "react";
-import {
-  Column,
-  Row,
-} from "@react-email/components";
+import React, { useMemo } from "react";
+import { Column, Row } from "@react-email/components";
 
 import Paragraph from "./Paragraph";
 import { ReactQuillInterface } from "../App";
+import { useDragStore } from "../state/drag.state";
+import { removePTags } from "../utils/removeTags";
 
 interface MyRowProps {
-  dragStartHandler: (item: ReactQuillInterface) => void
-  dragEndHandler: (e: React.DragEvent) => void
-  dragOverHandler: (e: React.DragEvent) => void
-  dropHandler: (e: React.DragEvent<HTMLDivElement>, item: ReactQuillInterface) => void
-  addItemHandler: (id: number) => void
-  dragOn: boolean
-  item: ReactQuillInterface
+  dragStartHandler: (item: ReactQuillInterface) => void;
+  dragEndHandler: (e: React.DragEvent) => void;
+  dragOverHandler: (e: React.DragEvent) => void;
+  dropHandler: (
+    e: React.DragEvent<HTMLDivElement>,
+    item: ReactQuillInterface
+  ) => void;
+  chooseItemHandler: (id: number) => void;
+  item: ReactQuillInterface;
 }
 
 const MyRow: React.FC<MyRowProps> = (props) => {
@@ -23,13 +24,13 @@ const MyRow: React.FC<MyRowProps> = (props) => {
     dragEndHandler,
     dragOverHandler,
     dropHandler,
-    addItemHandler,
-    dragOn,
+    chooseItemHandler,
     item,
   } = props;
-  const removePTags = (htmlString: string) =>
-    htmlString.replace(/<p[^>]*>(.*?)<\/p>/g, "$1");
-  return (
+
+  const { dragOn } = useDragStore();
+
+  const memoizedComponent = useMemo(() => (
     <Row
       onDragStart={() => dragStartHandler(item)}
       onDragLeave={(e) => dragEndHandler(e)}
@@ -39,18 +40,24 @@ const MyRow: React.FC<MyRowProps> = (props) => {
       draggable={dragOn}
       key={item.id}
     >
-      <Column className={`column ${item.isActive ? 'active' : ''}`} onClick={() => addItemHandler(item.id)}>
+      <Column
+        style={{ fontSize: "14px" }}
+        className={`column ${item.isActive ? "active" : ""}`}
+        onClick={() => chooseItemHandler(item.id)}
+      >
         <Paragraph>
           <span
             style={{ textAlign: "left" }}
             dangerouslySetInnerHTML={{
-              __html: removePTags(item.value)
+              __html: removePTags(item.value),
             }}
           ></span>
         </Paragraph>
       </Column>
     </Row>
-  );
+  ), [item]);
+
+  return memoizedComponent;
 };
 
 export default MyRow;

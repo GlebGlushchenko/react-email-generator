@@ -1,11 +1,15 @@
 import { Button, Column, Row } from "@react-email/components";
 import React from "react";
 
-interface MyButtonProps {
-  url: string;
+interface ButtonProps {
   title: string
+  url: string
 }
-const MyButton: React.FC<MyButtonProps> = ({url, title }) => {
+
+const MyButton: React.FC<ButtonProps> = ({title, url}) => {
+  
+
+debugger
   return (
     <Row style={{ paddingTop: "20px" }}>
       <Column style={{ textAlign: "center" }}>
@@ -24,7 +28,6 @@ const MyButton: React.FC<MyButtonProps> = ({url, title }) => {
           }}
         >
           {title}
-          {/* {!title ? url : title} */}
         </Button>
       </Column>
     </Row>

@@ -1,4 +1,5 @@
 import { Column, Row } from "@react-email/components";
+import { useDragStore } from "../state/drag.state";
 
 const EmptyRow = (props) => {
   const {
@@ -6,10 +7,10 @@ const EmptyRow = (props) => {
     dragEndHandler,
     dragOverHandler,
     dropHandler,
-    addItemHandler,
-    dragOn,
+    chooseItemHandler,
     item,
   } = props;
+  const { dragOn } = useDragStore();
 
   return (
     <Row
@@ -23,8 +24,8 @@ const EmptyRow = (props) => {
     >
       <Column
         style={{ padding: "10px 0" }}
-        className={`column ${item.value === "" ? "empty" : ""} ${item.isActive ? 'active' : ''}`}
-        onClick={() => addItemHandler(item.id)}
+        className={`column empty ${item.isActive ? "active" : ""}`}
+        onClick={() => chooseItemHandler(item.id)}
       ></Column>
     </Row>
   );

@@ -1,54 +1,87 @@
-import React from "react";
+import React, { useMemo } from "react";
 import ReactQuill from "react-quill";
-import { ReactQuillInterface } from "../App";
 import "../style/SideBar.css";
+import { useItemsStore } from "../state/item.state";
+import { useSideBarStore } from "../state/sideBar.state";
+import MyTemplate from "../../template/my.template";
+import { render } from "@react-email/components";
+import { downloadFile } from "../utils/downloadFile";
+import { useModalStore } from "../state/modal.state";
+import { useDragStore } from "../state/drag.state";
 
 interface SideBarProps {
-  isOpen: boolean;
-  setIsOpen: (open: boolean) => void;
-  choseTemplateSize: (format: string) => void;
-  showIframe: () => void;
-  renderHtml: () => void;
-  clearHandler: () => void;
-  setDragOn: (drag: boolean) => void;
-  dragOn: boolean;
-  onChangeHandler: (val: string) => void;
-  siteBarRedactorValue: ReactQuillInterface;
-  changeFragment: (obj: ReactQuillInterface) => void;
-  removeFragmentHandler?: (item: ReactQuillInterface) => void;
-  inputUrlValue: string;
-  setInputUrlValue: (targetValue: string) => void;
-  inputTextValue: string;
-  setInputTextValue: (targetValue: string) => void;
   addLinkButton: boolean;
 }
 
-const SideBar: React.FC<SideBarProps> = (props) => {
+ const SideBar: React.FC<SideBarProps> = (props) => {
   const {
-    isOpen,
-    setIsOpen,
-    choseTemplateSize,
-    showIframe,
-    renderHtml,
-    clearHandler,
-    setDragOn,
-    dragOn,
-    onChangeHandler,
-    siteBarRedactorValue,
-    changeFragment,
-    removeFragmentHandler,
-    inputUrlValue,
-    setInputUrlValue,
-    inputTextValue,
-    setInputTextValue,
     addLinkButton,
   } = props;
+
+  const {
+    items,
+    setHtml,
+    allClear,
+    sideBarItem,
+    changeFragment,
+    removeFragmentHandler,
+    setSideBarItemValue,
+    setTemplateSize,
+  } = useItemsStore();
+
+  const { iframeShow, setIframeShow } = useModalStore();
+
+  const { setOpenSideBar, sideBarIsOpen, setInputUrlValue, inputUrlValue, inputTextValue, setInputTextValue } = useSideBarStore();
+  const { showImg, setImgUrl, imgUrl } = useItemsStore();
+  const { dragOn, setDragOn } = useDragStore();
+
+
+  const renderHtml = () => {
+    const emailHTML = render(
+      <MyTemplate
+        content={items}
+        addLinkButton={addLinkButton}
+        showImg={showImg}
+        imgUrl={imgUrl}
+        inputUrlValue={inputUrlValue}
+        inputTextValue={inputTextValue}
+      />
+    );
+
+    downloadFile(emailHTML, "email.html");
+  };
+
+  const renderPreview = () => {
+    const emailHTML = render(
+      <MyTemplate
+        content={items}
+        addLinkButton={addLinkButton}
+        showImg={showImg}
+        imgUrl={imgUrl}
+        inputUrlValue={inputUrlValue}
+        inputTextValue={inputTextValue}
+      />
+    );
+
+    setHtml(emailHTML);
+  };
+
+  const showIframe = () => {
+    renderPreview();
+    setIframeShow(!iframeShow);
+  };
+
+  const choseTemplateSize = (format: string) => {
+    format === "mobile" ? setTemplateSize(400) : setTemplateSize(900);
+  };
+  console.log('SIDE-BAR RENDER')
+
   return (
-    <div className={`side-bar ${isOpen ? "open" : ""}`}>
+    <div className={`side-bar ${sideBarIsOpen ? "open" : ""}`}>
       <nav className="nav">
         <ul className="nav-page-size">
           <li>
-            <button onClick={() => setIsOpen(false)}>Закрыть</button>
+            <button onClick={() => setOpenSideBar(false)}>Закрыть</button>
           </li>
           <li>
             <button onClick={() => choseTemplateSize("mobile")}>📱</button>
@@ -65,12 +98,12 @@ const SideBar: React.FC<SideBarProps> = (props) => {
             <button onClick={renderHtml}>Получить HTML</button>
           </li>
           <li>
-            <button onClick={clearHandler}>Очистить</button>
+            <button onClick={allClear}>Очистить</button>
           </li>
         </ul>
       </nav>
       <button
-        onClick={() => setDragOn(!dragOn)}
+        onClick={() => setDragOn()}
         className={`${dragOn ? "drag-on" : ""}`}
       >{`drag and drop - ${dragOn ? " Включён" : "Выключен"}`}</button>
       <p>Редактирование</p>
@@ -78,23 +111,24 @@ const SideBar: React.FC<SideBarProps> = (props) => {
       <div className="side-bar-redactor">
         <ReactQuill
           theme={"bubble"}
-          onChange={onChangeHandler}
-          value={siteBarRedactorValue?.value}
+          onChange={setSideBarItemValue}
+          value={sideBarItem.value}
+          placeholder=" 👈 - - - - Это разделитель - - - - 👉 "
         ></ReactQuill>
       </div>
       <div className="side-bar-controls">
         <div>
-        <button
-          style={{ marginRight: "10px" }}
-          onClick={() => changeFragment(siteBarRedactorValue)}
-        >
-          OK
-        </button>
-        <button onClick={() => removeFragmentHandler(siteBarRedactorValue)}>
-          Удалить
-        </button>
+          <button
+            style={{ marginRight: "10px" }}
+            onClick={() => changeFragment(sideBarItem)}
+          >
+            OK
+          </button>
+          <button onClick={() => removeFragmentHandler(sideBarItem)}>
+            Удалить
+          </button>
         </div>
-        
+
         {addLinkButton && (
           <div className="input-control">
             <input
@@ -110,6 +144,17 @@ const SideBar: React.FC<SideBarProps> = (props) => {
               onChange={(e) => setInputUrlValue(e.target.value)}
               type="text"
               placeholder="URL..."
+            />
+          </div>
+        )}
+        {showImg && (
+          <div className="input-control">
+            <input
+              className="input-control-item"
+              value={imgUrl}
+              onChange={(e) => setImgUrl(e.target.value)}
+              type="text"
+              placeholder="Ссылка на картинку..."
             />
           </div>
         )}

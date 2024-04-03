@@ -17,8 +17,9 @@ body {
   flex-direction: column;
   position: relative;
   padding: 20px;
+  padding-bottom: 100px;
+  overflow-y: auto;
 }
-
 
 .content {
   padding: 10px;
@@ -31,7 +32,7 @@ body {
 .column {
   position: relative;
   padding: 20px 10px;
-  transition: all .25s;
+  transition: all 0.25s;
 }
 
 .column.empty::after {
@@ -39,27 +40,32 @@ body {
   display: block;
   width: 100%;
   height: 10px;
-  opacity: .4;
+  opacity: 0.4;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .column:hover {
-  opacity: .8;
+  opacity: 0.8;
   background-color: aliceblue;
   cursor: pointer;
   border-radius: 10px;
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.19);
+}
 
+.control-btn {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
 
 .active {
-  opacity: .5;
+  opacity: 0.5;
   background-color: rgb(245, 248, 250);
   cursor: pointer;
   border-radius: 10px;
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.19);
 }
 
 .inner {
@@ -75,9 +81,17 @@ body {
   padding: 20px;
   border-radius: 10px;
   transition: width 0.2s linear;
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.19);
 }
 
+.btn {
+  margin: 20px 10px 0 0;
+  padding: 20px;
+}
+
+.btn:last-child {
+  margin-right: 0;
+}
 
 h1 {
   font-size: 3.2em;
@@ -101,14 +115,13 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: all 0.25s;
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);
-
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.19);
 }
 button:hover {
   background-color: aliceblue;
 }
 button:active {
-  transform: translate3d(2px, 2px, 0) ;
+  transform: translate3d(2px, 2px, 0);
 }
 
 @media (prefers-color-scheme: light) {
@@ -125,6 +138,44 @@ button:active {
 }
 
 .drag-over {
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.19);
   border-bottom: 2px solid lightblue;
+}
+
+@media (max-width: 1200px) {
+  .wrapper {
+    padding: 20px 40px;
+  }
+  .inner {
+    width: 100%;
+  }
+
+  .inner-border {
+    width: 100% !important;
+  }
+
+  .control-btn {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 80%;
+    margin-right: 0;
+  }
+
+  .side-bar {
+    z-index: 1;
+    right: -1000px;
+    width: 100%;
+    padding: 0;
+  }
+
+  .side-bar-redactor {
+    width: 90%;
+  }
+
+  .modal {
+    width: 100%;
+  }
 }

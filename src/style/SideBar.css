@@ -12,7 +12,7 @@
 }
 
 .drag-on {
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19) inset;
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.19) inset;
 
   background-color: darkcyan;
   color: whitesmoke;
@@ -45,7 +45,7 @@
   border-radius: 15px;
   background-color: aliceblue;
   min-width: 100px;
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.19);
   width: 100%;
 }
 
@@ -84,7 +84,7 @@
 .input-control-item {
   padding: 15px 0px 15px 10px;
   background-color: aliceblue;
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.19);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.19);
   margin-right: 10px;
   border-radius: 10px;
   border: none;

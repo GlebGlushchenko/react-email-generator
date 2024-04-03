@@ -7,10 +7,9 @@ interface ReactQillRedactorProps {
   item: ReactQuillInterface;
   templateSize: number;
   addText: () => void;
-  addLinkButton: boolean
-  setAddLinkButton: (e: boolean) => void
+  addLinkButton: boolean;
+  setAddLinkButton: (e: boolean) => void;
 }
-
 
 const ReactQillRedactor: React.FC<ReactQillRedactorProps> = (props) => {
   const { item, templateSize } = props;
@@ -21,12 +20,8 @@ const ReactQillRedactor: React.FC<ReactQillRedactorProps> = (props) => {
       style={{ width: `${templateSize}px`, marginBottom: "50px" }}
     >
       <div className="side-bar-redactor">
-        <ReactQuill
-          theme={"bubble"}
-          value={item.value}
-        ></ReactQuill>
+        <ReactQuill theme={"bubble"} value={item.value}></ReactQuill>
       </div>
-
     </div>
   );
 };

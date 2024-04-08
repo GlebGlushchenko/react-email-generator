@@ -7,7 +7,6 @@ import {
   Heading,
   Html,
   Img,
-  Section,
 } from "@react-email/components";
 import { sortItem } from "../src/utils/sortItem.js";
 import MyRow from "../src/Components/MyRow.js";
@@ -16,7 +15,6 @@ import MyButton from "../src/Components/MyButton.js";
 import { ReactQuillInterface } from "../src/App.js";
 import { useSideBarStore } from "../src/state/sideBar.state.js";
 import { useItemsStore } from "../src/state/item.state.js";
-import { useDragStore } from "../src/state/drag.state.js";
 
 interface MyTemplateProps {
   content: ReactQuillInterface[];
@@ -26,7 +24,6 @@ interface MyTemplateProps {
   dragStartHandler?: (item: ReactQuillInterface) => void;
   dragEndHandler?: (e: React.DragEvent<HTMLDivElement>) => void;
   dragOverHandler?: (e: React.DragEvent<HTMLDivElement>) => void;
-  dragOn?: boolean;
   removeFragmentHandler?: () => void;
   setAddLinkButton?: (val: boolean) => void;
   imgUrl: string
@@ -69,7 +66,6 @@ const {setOpenSideBar} = useSideBarStore()
     e.preventDefault();
     e.target.classList.add("drag-over");
   };
-  console.log('MY TEMPLATE RENDER')
 
   return (
     <>

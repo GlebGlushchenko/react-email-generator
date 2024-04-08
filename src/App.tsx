@@ -6,7 +6,6 @@ import "react-quill/dist/quill.snow.css";
 import Modal from "./Components/Modal";
 import SideBar from "./Components/SideBar";
 import { useModalStore } from "./state/modal.state";
-import { useDragStore } from "./state/drag.state";
 import { useSideBarStore } from "./state/sideBar.state";
 export interface ReactQuillInterface {
   id?: number;
@@ -18,8 +17,6 @@ export interface ReactQuillInterface {
 
 export default function App() {
   const [addLinkButton, setAddLinkButton] = useState(false);
-
- 
 
   const {
     templateSize,
@@ -48,7 +45,6 @@ export default function App() {
   React.useEffect(() => {
     localStorage.setItem("ReactState", JSON.stringify(items));
   }, [items]);
-  console.log('APP RENDER')
   return (
     <div className="wrapper">
       {iframeShow && <Modal html={html} />}

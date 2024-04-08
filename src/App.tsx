@@ -18,8 +18,6 @@ export interface ReactQuillInterface {
 export default function App() {
   const [addLinkButton, setAddLinkButton] = useState(false);
 
- 
-
   const {
     templateSize,
     html,
@@ -47,7 +45,6 @@ export default function App() {
   React.useEffect(() => {
     localStorage.setItem("ReactState", JSON.stringify(items));
   }, [items]);
-  console.log('APP RENDER')
   return (
     <div className="wrapper">
       {iframeShow && <Modal html={html} />}

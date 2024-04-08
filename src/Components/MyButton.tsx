@@ -9,7 +9,6 @@ interface ButtonProps {
 const MyButton: React.FC<ButtonProps> = ({title, url}) => {
   
 
-debugger
   return (
     <Row style={{ paddingTop: "20px" }}>
       <Column style={{ textAlign: "center" }}>

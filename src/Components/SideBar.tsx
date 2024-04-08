@@ -74,7 +74,6 @@ interface SideBarProps {
   const choseTemplateSize = (format: string) => {
     format === "mobile" ? setTemplateSize(400) : setTemplateSize(900);
   };
-  console.log('SIDE-BAR RENDER')
 
   return (
     <div className={`side-bar ${sideBarIsOpen ? "open" : ""}`}>
@@ -103,7 +102,7 @@ interface SideBarProps {
         </ul>
       </nav>
       <button
-        onClick={() => setDragOn()}
+        onClick={setDragOn}
         className={`${dragOn ? "drag-on" : ""}`}
       >{`drag and drop - ${dragOn ? " Включён" : "Выключен"}`}</button>
       <p>Редактирование</p>

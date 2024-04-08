@@ -9,7 +9,7 @@ interface useDragStoreInterface {
 
 export const useDragStore = create<useDragStoreInterface>((set) => ({
   currentItem: {},
-  dragOn: true,
+  dragOn: false,
   setCurrentItem: (obj) => set({ currentItem: obj }),
   setDragOn: () => set((state) => ({ dragOn: !state.dragOn })),
 }));

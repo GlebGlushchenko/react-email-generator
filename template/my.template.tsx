@@ -23,7 +23,6 @@ interface MyTemplateProps {
   dragStartHandler?: (item: ReactQuillInterface) => void;
   dragEndHandler?: (e: React.DragEvent<HTMLDivElement>) => void;
   dragOverHandler?: (e: React.DragEvent<HTMLDivElement>) => void;
-  dragOn?: boolean;
   removeFragmentHandler?: () => void;
   setAddLinkButton?: (val: boolean) => void;
   imgUrl: string
@@ -66,7 +65,6 @@ const {setOpenSideBar} = useSideBarStore()
     e.preventDefault();
     e.target.classList.add("drag-over");
   };
-  console.log('MY TEMPLATE RENDER')
 
   return (
     <>

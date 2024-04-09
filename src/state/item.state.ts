@@ -1,127 +1,117 @@
 import { create } from "zustand";
-import { ReactQuillInterface } from "../App";
-interface useItemsStoreInterface {
-  items: ReactQuillInterface[];
-  sideBarItem: ReactQuillInterface;
-  templateSize: number;
-  setTemplateSize: (size: number) => void;
-  html: string;
-  setHtml: (str: string) => void;
-  addText: () => void;
-  allClear: () => void;
-  setItems: (newItem?: ReactQuillInterface[]) => void;
-  chooseItem: (id: number) => void;
-  removeFragmentHandler: (obj: ReactQuillInterface) => void;
-  setSideBarRedactorItem: (obj: ReactQuillInterface) => void;
-  changeFragment: (obj: ReactQuillInterface) => void;
-  setSideBarItemValue: (value: string) => void;
-  changeOrder: (e: any, obj: ReactQuillInterface) => void;
-  currentItem: {};
-  setCurrentItem: (obj: ReactQuillInterface) => void;
-  imgUrl: string;
-  setShowImg: (bol: boolean) => void;
-  showImg: boolean;
-  setImgUrl: (url: string) => void;
-}
+import { devtools } from "zustand/middleware";
+import { useItemsStoreInterface } from "../types/useItemStoreInterface";
+import { ReactQuillInterface } from "../types/reactQuillInterface";
 
 const initialState: ReactQuillInterface[] = [
   { id: 1, value: "Это параграф!", ItsShow: true, order: 1, isActive: false },
 ];
 
-export const useItemsStore = create<useItemsStoreInterface>((set) => ({
-  items: [],
-  sideBarItem: {},
-  currentItem: {},
-  imgUrl: "",
-  showImg: false,
-  setShowImg: (bol) => set(() => ({ showImg: bol })),
-  html: "",
-  templateSize: 900,
-  setTemplateSize: (size) => set(() => ({ templateSize: size })),
-  setHtml: (str) => set(() => ({ html: str })),
-  addText: () =>
-    set((state) => {
-      const newItem = {
-        items: [
-          ...state.items,
-          {
-            id: Date.now(),
-            value: "",
-            ItsShow: false,
-            order: Date.now(),
-            isActive: false,
-          },
-        ],
-      };
+export const useItemsStore = create<useItemsStoreInterface>()(
+  devtools(
+    (set) => ({
+      items: [],
+      isAddHeading: false,
+      sideBarItem: {},
+      currentItem: {},
+      imgUrl: "",
+      showImg: false,
+      setShowImg: (bol) => set(() => ({ showImg: bol })),
+      html: "",
+      templateSize: 900,
+      setTemplateSize: (size) =>
+        set(() => ({ templateSize: size }), false, "setTemplateSize"),
+      setHtml: (str) => set(() => ({ html: str })),
+      addText: () =>
+        set((state) => {
+          const newItem = {
+            items: [
+              ...state.items,
+              {
+                id: Date.now(),
+                value: "",
+                ItsShow: false,
+                order: Date.now(),
+                isActive: false,
+              },
+            ],
+          };
 
-      return newItem;
-    }),
+          return newItem;
+        }),
 
-  allClear: () => set(() => ({ items: initialState })),
+      allClear: () => set(() => ({ items: initialState })),
 
-  setItems: (newItem) =>
-    set((state) => {
-      const newState = { items: [...state.items, ...newItem] };
-      return newState;
-    }),
+      setItems: (newItem) =>
+        set((state) => {
+          const newState = { items: [...state.items, ...newItem] };
+          return newState;
+        }),
 
-  chooseItem: (id: number) =>
-    set((state) => {
-      return {
-        items: state.items.map((i) => ({
-          ...i,
-          isActive: i.id === id ? true : false,
+      chooseItem: (id: number) =>
+        set((state) => {
+          return {
+            items: state.items.map((i) => ({
+              ...i,
+              isActive: i.id === id ? true : false,
+            })),
+          };
+        }),
+
+      setSideBarRedactorItem: (newObject) => set({ sideBarItem: newObject }),
+
+      setSideBarItemValue: (newValue) =>
+        set((state) => ({
+          sideBarItem: { ...state.sideBarItem, value: newValue },
         })),
-      };
-    }),
 
-  setSideBarRedactorItem: (newObject) => set({ sideBarItem: newObject }),
-
-  setSideBarItemValue: (newValue) =>
-    set((state) => ({
-      sideBarItem: { ...state.sideBarItem, value: newValue },
-    })),
-
-  changeFragment: (newObj) =>
-    set((state) => {
-      return {
-        items: state.items.map((i) => {
-          if (i.id === newObj.id) {
-            return { ...i, value: newObj.value };
-          }
-          return i;
+      changeFragment: (newObj) =>
+        set((state) => {
+          return {
+            items: state.items.map((i) => {
+              if (i.id === newObj.id) {
+                return { ...i, value: newObj.value };
+              }
+              return i;
+            }),
+          };
         }),
-      };
-    }),
 
-  removeFragmentHandler: (obj) =>
-    set((state) => {
-      return {
-        items: state.items.filter((i) => i.id !== obj.id),
-        sideBarItem: {},
-      };
-    }),
-
-  setCurrentItem: (newObject) => set({ currentItem: newObject }),
-  setImgUrl: (url) => set({ imgUrl: url }),
-
-  changeOrder: (e, item) =>
-    set((state: any) => {
-      e.preventDefault();
-      e.target.classList.remove("drag-over");
-      return {
-        items: state.items.map((i) => {
-          if (i.id === item.id) {
-            const x = { ...i, order: state.currentItem.order };
-            return x;
-          }
-
-          if (i.id === state.currentItem.id) {
-            const y = { ...i, order: item.order };
-            return y;
-          }
-          return i;
+      removeFragmentHandler: (obj) =>
+        set((state) => {
+          return {
+            items: state.items.filter((i) => i.id !== obj.id),
+            sideBarItem: {},
+          };
         }),
-      };
+
+      setCurrentItem: (newObject) => set({ currentItem: newObject }),
+      setImgUrl: (url) => set({ imgUrl: url }),
+
+      changeOrder: (e, item) =>
+        set((state: any) => {
+          e.preventDefault();
+          e.target.classList.remove("drag-over");
+          return {
+            items: state.items.map((i) => {
+              if (i.id === item.id) {
+                const x = { ...i, order: state.currentItem.order };
+                return x;
+              }
+
+              if (i.id === state.currentItem.id) {
+                const y = { ...i, order: item.order };
+                return y;
+              }
+              return i;
+            }),
+          };
+        }),
+      dragOn: false,
+      setDragOn: () => set((state) => ({ dragOn: !state.dragOn })),
+      setIsHeading: () => set((state) => ({isAddHeading: !state.isAddHeading}))
+
     }),
-}));
+    { name: "items" }
+  )
+);

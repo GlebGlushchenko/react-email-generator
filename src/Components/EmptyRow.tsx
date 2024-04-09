@@ -1,5 +1,5 @@
 import { Column, Row } from "@react-email/components";
-import { useDragStore } from "../state/drag.state";
+import { useItemsStore } from "../state/item.state";
 
 const EmptyRow = (props) => {
   const {
@@ -10,7 +10,7 @@ const EmptyRow = (props) => {
     chooseItemHandler,
     item,
   } = props;
-  const { dragOn } = useDragStore();
+  const { dragOn } = useItemsStore();
 
   return (
     <Row
@@ -23,6 +23,7 @@ const EmptyRow = (props) => {
       key={item.id}
     >
       <Column
+        draggable={dragOn}
         style={{ padding: "10px 0" }}
         className={`column empty ${item.isActive ? "active" : ""}`}
         onClick={() => chooseItemHandler(item.id)}

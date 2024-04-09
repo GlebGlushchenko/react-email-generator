@@ -7,13 +7,7 @@ import Modal from "./Components/Modal";
 import SideBar from "./Components/SideBar";
 import { useModalStore } from "./state/modal.state";
 import { useSideBarStore } from "./state/sideBar.state";
-export interface ReactQuillInterface {
-  id?: number;
-  value?: string;
-  ItsShow?: boolean;
-  order?: number;
-  isActive?: boolean;
-}
+
 
 export default function App() {
   const [addLinkButton, setAddLinkButton] = useState(false);
@@ -27,6 +21,8 @@ export default function App() {
     showImg,
     setShowImg,
     imgUrl,
+    setIsHeading,
+    isAddHeading
   } = useItemsStore();
 
   const { iframeShow } = useModalStore();
@@ -62,6 +58,7 @@ export default function App() {
             setAddLinkButton={setAddLinkButton}
             inputTextValue={inputTextValue}
             inputUrlValue={inputUrlValue}
+            isAddHeading={isAddHeading}
           />
 
           <div className="control-btn">
@@ -85,6 +82,15 @@ export default function App() {
               }}
             >
               {`${showImg ? "Удалить" : "Добавить"} обложку`}
+            </button>
+            <button
+              className="btn"
+              onClick={setIsHeading}
+              style={{
+                backgroundColor: ` ${isAddHeading ? "#e39d98" : ""}`,
+              }}
+            >
+              {`${isAddHeading ? "Удалить" : "Добавить"} Заголовок`}
             </button>
           </div>
         </div>

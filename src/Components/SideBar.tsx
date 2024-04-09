@@ -7,7 +7,6 @@ import MyTemplate from "../../template/my.template";
 import { render } from "@react-email/components";
 import { downloadFile } from "../utils/downloadFile";
 import { useModalStore } from "../state/modal.state";
-import { useDragStore } from "../state/drag.state";
 
 interface SideBarProps {
   addLinkButton: boolean;
@@ -32,8 +31,7 @@ interface SideBarProps {
   const { iframeShow, setIframeShow } = useModalStore();
 
   const { setOpenSideBar, sideBarIsOpen, setInputUrlValue, inputUrlValue, inputTextValue, setInputTextValue } = useSideBarStore();
-  const { showImg, setImgUrl, imgUrl } = useItemsStore();
-  const { dragOn, setDragOn } = useDragStore();
+  const { showImg, setImgUrl, imgUrl, dragOn, setDragOn, isAddHeading } = useItemsStore();
 
 
   const renderHtml = () => {
@@ -45,6 +43,7 @@ interface SideBarProps {
         imgUrl={imgUrl}
         inputUrlValue={inputUrlValue}
         inputTextValue={inputTextValue}
+        isAddHeading={isAddHeading}
       />
     );
 
@@ -60,6 +59,7 @@ interface SideBarProps {
         imgUrl={imgUrl}
         inputUrlValue={inputUrlValue}
         inputTextValue={inputTextValue}
+        isAddHeading={isAddHeading}
       />
     );
 

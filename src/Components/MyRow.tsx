@@ -2,9 +2,9 @@ import React, { useMemo } from "react";
 import { Column, Row } from "@react-email/components";
 
 import Paragraph from "./Paragraph";
-import { ReactQuillInterface } from "../App";
-import { useDragStore } from "../state/drag.state";
 import { removePTags } from "../utils/removeTags";
+import { useItemsStore } from "../state/item.state";
+import { ReactQuillInterface } from "../types/reactQuillInterface";
 
 interface MyRowProps {
   dragStartHandler: (item: ReactQuillInterface) => void;
@@ -28,7 +28,7 @@ const MyRow: React.FC<MyRowProps> = (props) => {
     item,
   } = props;
 
-  const { dragOn } = useDragStore();
+  const { dragOn } = useItemsStore();
 
   const memoizedComponent = useMemo(() => (
     <Row
@@ -44,6 +44,7 @@ const MyRow: React.FC<MyRowProps> = (props) => {
         style={{ fontSize: "14px" }}
         className={`column ${item.isActive ? "active" : ""}`}
         onClick={() => chooseItemHandler(item.id)}
+        draggable={dragOn}
       >
         <Paragraph>
           <span

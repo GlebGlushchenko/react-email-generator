@@ -1,7 +1,7 @@
 import React from "react";
 
 import ReactQuill from "react-quill";
-import { ReactQuillInterface } from "../App";
+import { ReactQuillInterface } from "../types/reactQuillInterface";
 
 interface ReactQillRedactorProps {
   item: ReactQuillInterface;

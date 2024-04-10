@@ -24,13 +24,12 @@ interface MyTemplateProps {
   dragEndHandler?: (e: React.DragEvent<HTMLDivElement>) => void;
   dragOverHandler?: (e: React.DragEvent<HTMLDivElement>) => void;
   removeFragmentHandler?: () => void;
-  setAddLinkButton?: (val: boolean) => void;
-  imgUrl: string
-  showImg: boolean
-  isAddHeading: boolean
-
-  inputUrlValue?:string
-  inputTextValue?: string
+  imgUrl: string;
+  showImg: boolean;
+  isAddHeading: boolean;
+  templateSize?: number;
+  inputUrlValue?: string;
+  inputTextValue?: string;
 }
 const MyTemplate: React.FC<MyTemplateProps> = (props) => {
   const {
@@ -40,19 +39,21 @@ const MyTemplate: React.FC<MyTemplateProps> = (props) => {
     showImg,
     inputUrlValue,
     inputTextValue,
-    isAddHeading
+    isAddHeading,
+    templateSize,
   } = props;
 
-const {setOpenSideBar} = useSideBarStore()
+  const { setOpenSideBar } = useSideBarStore();
 
-  const {setSideBarRedactorItem, setCurrentItem, chooseItem, changeOrder} = useItemsStore()
+  const { setSideBarRedactorItem, setCurrentItem, chooseItem, changeOrder } =
+    useItemsStore();
 
   const chooseItemHandler = (id: number) => {
     const findElement = content.find((i) => i.id === id);
     setOpenSideBar(true);
 
     setSideBarRedactorItem(findElement);
-    chooseItem(id)
+    chooseItem(id);
   };
 
   const dragStartHandler = (item: ReactQuillInterface) => {
@@ -81,13 +82,18 @@ const {setOpenSideBar} = useSideBarStore()
         </Head>
         <Body>
           <Container>
-          {showImg && <Img
-            src={imgUrl === '' ? 'https://placehold.co/600x300' : imgUrl}
-            alt="Обложка"
-            height={300}
-            style={{ margin: "auto" }}
-          />}
-            {isAddHeading && <Heading as="h2">Здравствуйте, *|APPEAL_NAME|*!</Heading>}
+            {showImg && (
+              <Img
+                src={imgUrl === "" ? "https://placehold.co/600x300" : imgUrl}
+                alt="Обложка"
+                height={300}
+                width={templateSize}
+                style={{ margin: "auto", width: "100%" }}
+              />
+            )}
+            {isAddHeading && (
+              <Heading as="h2">Здравствуйте, *|APPEAL_NAME|*!</Heading>
+            )}
             {content.sort(sortItem).map((item) => {
               if (item.value !== "") {
                 return (
@@ -116,7 +122,7 @@ const {setOpenSideBar} = useSideBarStore()
             })}
 
             {addLinkButton && (
-              <MyButton url={inputUrlValue} title={inputTextValue}/>
+              <MyButton url={inputUrlValue} title={inputTextValue} />
             )}
           </Container>
         </Body>

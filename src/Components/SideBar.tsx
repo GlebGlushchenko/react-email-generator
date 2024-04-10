@@ -12,10 +12,8 @@ interface SideBarProps {
   addLinkButton: boolean;
 }
 
- const SideBar: React.FC<SideBarProps> = (props) => {
-  const {
-    addLinkButton,
-  } = props;
+const SideBar: React.FC<SideBarProps> = (props) => {
+  const { addLinkButton } = props;
 
   const {
     items,
@@ -30,9 +28,24 @@ interface SideBarProps {
 
   const { iframeShow, setIframeShow } = useModalStore();
 
-  const { setOpenSideBar, sideBarIsOpen, setInputUrlValue, inputUrlValue, inputTextValue, setInputTextValue } = useSideBarStore();
-  const { showImg, setImgUrl, imgUrl, dragOn, setDragOn, isAddHeading } = useItemsStore();
-
+  const {
+    setOpenSideBar,
+    sideBarIsOpen,
+    setInputUrlValue,
+    inputUrlValue,
+    inputTextValue,
+    setInputTextValue,
+  } = useSideBarStore();
+  const {
+    showImg,
+    setImgUrl,
+    imgUrl,
+    dragOn,
+    setDragOn,
+    isAddHeading,
+    setPositionCenter,
+    setColorBorder,
+  } = useItemsStore();
 
   const renderHtml = () => {
     const emailHTML = render(
@@ -115,6 +128,22 @@ interface SideBarProps {
           placeholder=" 👈 - - - - Это разделитель - - - - 👉 "
         ></ReactQuill>
       </div>
+
+      <div className="side-bar-controls-text">
+        <button
+         
+          onClick={() => setPositionCenter(sideBarItem)}
+        >
+          По центру
+        </button>
+        <button
+          
+          onClick={() => setColorBorder(sideBarItem)}
+        >
+         Добавить рамку
+        </button>
+      </div>
+
       <div className="side-bar-controls">
         <div>
           <button

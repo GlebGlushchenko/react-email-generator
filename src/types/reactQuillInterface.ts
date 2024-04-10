@@ -4,4 +4,6 @@ export interface ReactQuillInterface {
   ItsShow?: boolean;
   order?: number;
   isActive?: boolean;
+  isPositionCenter?: boolean
+  isBorderColor?: boolean
 }

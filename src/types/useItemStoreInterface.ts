@@ -18,7 +18,7 @@ export interface useItemsStoreInterface {
   changeOrder: (e: any, obj: ReactQuillInterface) => void;
   currentItem: {};
   imgUrl: string;
-  setShowImg: (bol: boolean) => void;
+  setShowImg: () => void;
   showImg: boolean;
   setImgUrl: (url: string) => void;
   setCurrentItem: (obj: ReactQuillInterface) => void;
@@ -26,4 +26,6 @@ export interface useItemsStoreInterface {
   isAddHeading: boolean;
   setDragOn: () => void;
   setIsHeading: () => void;
+  setPositionCenter: (item: ReactQuillInterface) => void
+  setColorBorder: (item: ReactQuillInterface) => void
 }

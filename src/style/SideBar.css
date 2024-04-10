@@ -77,6 +77,12 @@
   width: 390px;
 }
 
+.side-bar-controls-text {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+
 .input-control {
   margin-top: 20px;
 }

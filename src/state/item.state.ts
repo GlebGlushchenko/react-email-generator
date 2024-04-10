@@ -4,7 +4,7 @@ import { useItemsStoreInterface } from "../types/useItemStoreInterface";
 import { ReactQuillInterface } from "../types/reactQuillInterface";
 
 const initialState: ReactQuillInterface[] = [
-  { id: 1, value: "Это параграф!", ItsShow: true, order: 1, isActive: false },
+  { id: 1, value: "Это параграф!", ItsShow: true, order: 1, isActive: false, isPositionCenter: false, isBorderColor: false },
 ];
 
 export const useItemsStore = create<useItemsStoreInterface>()(
@@ -16,7 +16,7 @@ export const useItemsStore = create<useItemsStoreInterface>()(
       currentItem: {},
       imgUrl: "",
       showImg: false,
-      setShowImg: (bol) => set(() => ({ showImg: bol })),
+      setShowImg: () => set((state) => ({ showImg: !state.showImg })),
       html: "",
       templateSize: 900,
       setTemplateSize: (size) =>
@@ -109,7 +109,30 @@ export const useItemsStore = create<useItemsStoreInterface>()(
         }),
       dragOn: false,
       setDragOn: () => set((state) => ({ dragOn: !state.dragOn })),
-      setIsHeading: () => set((state) => ({isAddHeading: !state.isAddHeading}))
+
+      setIsHeading: () => set((state) => ({isAddHeading: !state.isAddHeading})),
+
+      setPositionCenter: (item) => set((state) => {
+        return {
+          items: state.items.map((i) => {
+            if (i.id === item.id) {
+              return { ...i, isPositionCenter: !i.isPositionCenter };
+            }
+            return i;
+          }),
+        }
+      }),
+
+      setColorBorder: (item) => set((state) => {
+        return {
+          items: state.items.map((i) => {
+            if (i.id === item.id) {
+              return { ...i, isBorderColor: !i.isBorderColor };
+            }
+            return i;
+          }),
+        }
+      })
 
     }),
     { name: "items" }

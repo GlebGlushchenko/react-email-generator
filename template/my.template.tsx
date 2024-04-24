@@ -81,14 +81,14 @@ const MyTemplate: React.FC<MyTemplateProps> = (props) => {
           />
         </Head>
         <Body>
-          <Container>
+          <Container style={{ padding: "15px", width: "680px" }}>
             {showImg && (
               <Img
                 src={imgUrl === "" ? "https://placehold.co/600x300" : imgUrl}
                 alt="Обложка"
                 height={300}
-                width={templateSize}
-                style={{ margin: "auto", width: "100%" }}
+                width={"680px"}
+                style={{ margin: "auto", width: "680px" }}
               />
             )}
             {isAddHeading && (

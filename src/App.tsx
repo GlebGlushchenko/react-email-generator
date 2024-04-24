@@ -60,7 +60,6 @@ export default function App() {
             inputTextValue={inputTextValue}
             inputUrlValue={inputUrlValue}
             isAddHeading={isAddHeading}
-            templateSize={templateSize}
           />
           <div className="control-btn">
             <ControlItem title={"Добавить параграф"} clickHandler={addText} />

@@ -27,7 +27,6 @@ interface MyTemplateProps {
   imgUrl: string;
   showImg: boolean;
   isAddHeading: boolean;
-  templateSize?: number;
   inputUrlValue?: string;
   inputTextValue?: string;
 }
@@ -40,7 +39,6 @@ const MyTemplate: React.FC<MyTemplateProps> = (props) => {
     inputUrlValue,
     inputTextValue,
     isAddHeading,
-    templateSize,
   } = props;
 
   const { setOpenSideBar } = useSideBarStore();

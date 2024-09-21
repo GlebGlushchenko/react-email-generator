@@ -84,108 +84,99 @@ const SideBar: React.FC<SideBarProps> = (props) => {
     setIframeShow(!iframeShow);
   };
 
-  const choseTemplateSize = (format: string) => {
-    format === "mobile" ? setTemplateSize(400) : setTemplateSize(900);
-  };
-
   return (
     <div className={`side-bar ${sideBarIsOpen ? "open" : ""}`}>
-      <nav className="nav">
-        <ul className="nav-page-size">
-          <li>
-            <button onClick={() => setOpenSideBar(false)}>Закрыть</button>
-          </li>
-          <li>
-            <button onClick={() => choseTemplateSize("mobile")}>📱</button>
-          </li>
-          <li>
-            <button onClick={() => choseTemplateSize("desktop")}>🖥️</button>
-          </li>
-        </ul>
-        <ul className="nav-page-control">
-          <li>
-            <button onClick={showIframe}>Результат</button>
-          </li>
-          <li>
-            <button onClick={renderHtml}>Получить HTML</button>
-          </li>
-          <li>
-            <button onClick={allClear}>Очистить</button>
-          </li>
-        </ul>
-      </nav>
-      <button
-        onClick={setDragOn}
-        className={`${dragOn ? "drag-on" : ""}`}
-      >{`drag and drop - ${dragOn ? " Включён" : "Выключен"}`}</button>
-      <p>Редактирование</p>
-
-      <div className="side-bar-redactor">
-        <ReactQuill
-          theme={"bubble"}
-          onChange={setSideBarItemValue}
-          value={sideBarItem.value}
-          placeholder=" 👈 - - - - Это разделитель - - - - 👉 "
-        ></ReactQuill>
-      </div>
-
-      <div className="side-bar-controls-text">
+      <div>
+        <nav className="nav">
+          <ul className="nav-page-size">
+            <li>
+              <button onClick={() => setOpenSideBar(false)}>Закрыть</button>
+            </li>
+          </ul>
+          <ul className="nav-page-control">
+            <li>
+              <button onClick={showIframe}>Результат</button>
+            </li>
+            <li>
+              <button onClick={renderHtml}>Получить HTML</button>
+            </li>
+            <li>
+              <button onClick={allClear}>Очистить</button>
+            </li>
+          </ul>
+        </nav>
         <button
-         
-          onClick={() => setPositionCenter(sideBarItem)}
-        >
-          По центру
-        </button>
-        <button
-          
-          onClick={() => setColorBorder(sideBarItem)}
-        >
-         Добавить рамку
-        </button>
-      </div>
-
-      <div className="side-bar-controls">
-        <div>
-          <button
-            style={{ marginRight: "10px" }}
-            onClick={() => changeFragment(sideBarItem)}
-          >
-            OK
+          onClick={setDragOn}
+          className={`${dragOn ? "drag-on" : ""}`}
+        >{`drag and drop - ${dragOn ? " Включён" : "Выключен"}`}</button>
+        <p>Редактирование</p>
+        <div className="side-bar-redactor">
+          <ReactQuill
+            theme={"bubble"}
+            onChange={setSideBarItemValue}
+            value={sideBarItem.value}
+            placeholder=" 👈 - - - - Это разделитель - - - - 👉 "
+          ></ReactQuill>
+        </div>
+        <div className="side-bar-controls-text">
+          <button onClick={() => setPositionCenter(sideBarItem)}>
+            По центру
           </button>
-          <button onClick={() => removeFragmentHandler(sideBarItem)}>
-            Удалить
+          <button onClick={() => setColorBorder(sideBarItem)}>
+            Добавить рамку
           </button>
         </div>
+        <div className="side-bar-controls">
+          <div>
+            <button
+              style={{ marginRight: "10px" }}
+              onClick={() => changeFragment(sideBarItem)}
+            >
+              OK
+            </button>
+            <button onClick={() => removeFragmentHandler(sideBarItem)}>
+              Удалить
+            </button>
+          </div>
 
-        {addLinkButton && (
-          <div className="input-control">
-            <input
-              className="input-control-item"
-              value={inputTextValue}
-              onChange={(e) => setInputTextValue(e.target.value)}
-              type="text"
-              placeholder="Текст для кнопки..."
-            />
-            <input
-              className="input-control-item"
-              value={inputUrlValue}
-              onChange={(e) => setInputUrlValue(e.target.value)}
-              type="text"
-              placeholder="URL..."
-            />
-          </div>
-        )}
-        {showImg && (
-          <div className="input-control">
-            <input
-              className="input-control-item"
-              value={imgUrl}
-              onChange={(e) => setImgUrl(e.target.value)}
-              type="text"
-              placeholder="Ссылка на картинку..."
-            />
-          </div>
-        )}
+          {addLinkButton && (
+            <div className="input-control">
+              <input
+                className="input-control-item"
+                value={inputTextValue}
+                onChange={(e) => setInputTextValue(e.target.value)}
+                type="text"
+                placeholder="Текст для кнопки..."
+              />
+              <input
+                className="input-control-item"
+                value={inputUrlValue}
+                onChange={(e) => setInputUrlValue(e.target.value)}
+                type="text"
+                placeholder="URL..."
+              />
+            </div>
+          )}
+          {showImg && (
+            <div className="input-control">
+              <input
+                className="input-control-item"
+                value={imgUrl}
+                onChange={(e) => setImgUrl(e.target.value)}
+                type="text"
+                placeholder="Ссылка на картинку..."
+              />
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="copyright">
+        <span>Idea and implementation Gleb Glushchenko ©</span>
+        <span>
+          <a href="mailto:GlebGlushchenk0@yandex.ru">
+            GlebGlushchenk0@yandex.ru
+          </a>
+        </span>
       </div>
     </div>
   );

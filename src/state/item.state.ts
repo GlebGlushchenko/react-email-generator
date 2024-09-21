@@ -4,14 +4,13 @@ import { useItemsStoreInterface } from "../types/useItemStoreInterface";
 import { ReactQuillInterface } from "../types/reactQuillInterface";
 
 const initialState: ReactQuillInterface[] = [
-  { id: 1, value: "Это параграф!", ItsShow: true, order: 1, isActive: false, isPositionCenter: false, isBorderColor: false },
 ];
 
 export const useItemsStore = create<useItemsStoreInterface>()(
   devtools(
     (set) => ({
       items: [],
-      isAddHeading: false,
+      isAddHeading: true,
       sideBarItem: {},
       currentItem: {},
       imgUrl: "",

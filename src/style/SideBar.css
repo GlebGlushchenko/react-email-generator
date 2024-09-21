@@ -22,11 +22,22 @@
   background-color: darkcyan;
 }
 
+.copyright {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  opacity: 0.5;
+  color: rgb(62, 62, 62);
+}
+
 .side-bar {
   position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   top: 0;
   right: -425px;
   height: 100%;

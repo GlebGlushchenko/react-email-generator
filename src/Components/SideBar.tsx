@@ -23,7 +23,6 @@ const SideBar: React.FC<SideBarProps> = (props) => {
     changeFragment,
     removeFragmentHandler,
     setSideBarItemValue,
-    setTemplateSize,
   } = useItemsStore();
 
   const { iframeShow, setIframeShow } = useModalStore();
